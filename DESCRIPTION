@@ -5,8 +5,7 @@ Version: 2019.04.09
 Date: 2019-04-09
 Author: William Stockhausen
 Maintainer: William Stockhausen <william.stockhausen@noaa.gov>
-Description: Provides a set of functions to convert ADFG crab fishery data
-to TCSAM02-compatible formats.
+Description: Provides a set of functions to convert ADFG crab fishery data to TCSAM02-compatible formats.
 License: MIT + file LICENSE
 LazyData: true
 Imports:
@@ -26,4 +25,4 @@ Suggests:
     rmarkdown (>= 1.8),
     tmap (>= 2.0),
     tmaptools (>= 2.0)
-RoxygenNote: 6.1.0
+RoxygenNote: 6.1.1

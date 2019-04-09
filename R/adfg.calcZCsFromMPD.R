@@ -1,6 +1,24 @@
 #'
+#' @title Calculate size compositions from measure pot data
+#'
+#' @description Function to calculate size compositions from measure pot data.
+#'
 #' @param dfr - data.frame from function \code{adfg.extractMPD}
-#' @params writeCSV - flag (T/F) to write table to csv file
+#' @param writeCSV - flag (T/F) to write table to csv file
+#'
+#' @return a dataframe with columns
+#' * year
+#' * fishery
+#' * area
+#' * sex
+#' * maturity
+#' * shell condition
+#' * size
+#' * count
+#'
+#' @details Uses \code{sqldf::sqldf} and \code{wtsUtilities::Sum}.
+#'
+#' @export
 #'
 adfg.calcZCsFromMPD<-function(dfr,
                               writeCSV=FALSE){
