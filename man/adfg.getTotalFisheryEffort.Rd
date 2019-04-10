@@ -17,7 +17,7 @@ a tibble with columns
 * fishery
 * area
 * year
-* totPots
+* potlifts - number of potlifts
 }
 \description{
 Function to get total fishery effort from a csv file.

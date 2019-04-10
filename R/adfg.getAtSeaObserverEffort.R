@@ -9,8 +9,9 @@
 #' @return tibble with columns:
 #' * fishery
 #' * area
-#' * year
-#' * obsPots
+#' * year - fishery year
+#' * summary pots - number of summary pots sampled
+#' * measure pots - number of measure pots
 #'
 #' @details Read a csv file with at-sea observer effort, including sampled pots with no crab.
 #' Uses \code{readr::read_csv}, \code{tibble::add_column}, \code{stringr::str_sub}.
@@ -23,8 +24,8 @@ adfg.getAtSeaObserverEffort<-function(csv="AtSeaCrabObserverEffort.1990-2018.csv
                                       skip=4){
   tbl <- readr::read_csv(csv,progress=FALSE,skip=skip);
   names(tbl) <- tolower(names(tbl));
-  tbl <- tbl[,c("year","fishery","measured pots")];
-  names(tbl)[3] <- "obsPots";
+  tbl <- tbl[,c("year","fishery","total pots","measured pots")];
+  names(tbl)[3:4] <- c("summary pots","measure pots");
   idE <- tbl$fishery=="Tanner E";
   idW <- tbl$fishery=="Tanner W";
   area<-"all EBS";
@@ -33,7 +34,7 @@ adfg.getAtSeaObserverEffort<-function(csv="AtSeaCrabObserverEffort.1990-2018.csv
   tbl$area[idW] <- "West 166W";
   tbl$fishery <- adfg.ConvertFisheryNames(tbl$fishery);
   tbl$year <- as.numeric(stringr::str_sub(tbl$year,1,4));
-  tbl <- tbl[,c("fishery","area","year","obsPots")];
+  tbl <- tbl[,c("fishery","area","year","summary pots","measure pots")];
   return(tbl);
 }
 

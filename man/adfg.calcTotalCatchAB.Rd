@@ -18,14 +18,14 @@ tibble with columns
  * fishery
  * area
  * year
- * sex
- * totPots - number of pots fished (total effort)
- * obsPots - number of observed pots (sample effort)
+ * potlifts - number of pots fished (total effort)
+ * measure pots - number of observed pots (sample effort)
  * expFactor - expansion factor
- * obsAbund - observed abdundance
- * obsWgt - individual weight calculated using L-W regresssions
- * totAbund - estimated total catch abundance (millions)
- * totBio - estimated total catch biomass (thousands t)
+ * sex - "male", "female", "undetermined", "hermaphrodite", or NA
+ * variable - "count","weight","abundance", or "biomass"
+ * value - value of asociated variable
+ * type - "observed" or "expanded"
+ * units - "ones", "thousands", "kg" or "1000's t"
 }
 \description{
 Function to calculate estimated total catch abundance by expanding observed abundance.

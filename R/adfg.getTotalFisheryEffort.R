@@ -10,7 +10,7 @@
 #' * fishery
 #' * area
 #' * year
-#' * totPots
+#' * potlifts - number of potlifts
 #'
 #' @details Uses \code{readr::read_csv}, \code{stringr::str_sub}, \code{dplyr::mutate},
 #' \code{tidyr::gather}, and \code{sqldf::sqldf}.
@@ -36,7 +36,7 @@ adfg.getTotalFisheryEffort<-function(csv="FishingEffortByFleet.1990-2017.csv",
   tbl$fishery <- adfg.ConvertFisheryNames(tbl$fishery);
 
   qry<-"select fishery,area,year,
-          sum(totPots) as totPots
+          sum(totPots) as potlifts
         from tbl
         group by fishery,area,year;";
   tbl<-sqldf::sqldf(qry);

@@ -17,8 +17,9 @@
 tibble with columns:
 * fishery
 * area
-* year
-* obsPots
+* year - fishery year
+* summary pots - number of summary pots sampled
+* measure pots - number of measure pots
 }
 \description{
 Function to get at-sea observer effort from a csv file.

@@ -11,7 +11,7 @@
 #'
 #' @export
 #'
-adfg.extractMPD<-function(csv="crab_dump-931-v17.csv"){
+adfg.getMPD<-function(csv="crab_dump-931-v17.csv"){
   #--read measure pot data file
   dfr <- readr::read_csv(csv);
   #column names should be:

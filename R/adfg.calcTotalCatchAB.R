@@ -11,14 +11,14 @@
 #'  * fishery
 #'  * area
 #'  * year
-#'  * sex
-#'  * totPots - number of pots fished (total effort)
-#'  * obsPots - number of observed pots (sample effort)
+#'  * potlifts - number of pots fished (total effort)
+#'  * measure pots - number of observed pots (sample effort)
 #'  * expFactor - expansion factor
-#'  * obsAbund - observed abdundance
-#'  * obsWgt_kg - individual weight (kg) calculated using L-W regresssions
-#'  * totAbund - estimated total catch abundance (millions)
-#'  * totBio - estimated total catch biomass (thousands t)
+#'  * sex - "male", "female", "undetermined", "hermaphrodite", or NA
+#'  * variable - "count","weight","abundance", or "biomass"
+#'  * value - value of asociated variable
+#'  * type - "observed" or "expanded"
+#'  * units - "ones", "thousands", "kg" or "1000's t"
 #'
 #' @details Uses \code{sqldf::sqldf}.
 #'
@@ -47,8 +47,8 @@ adfg.calcTotalCatchAB<-function(tblMPD,
 
   #calculate expansion factors
   qry <- "select t.fishery,t.area,t.year,
-            totPots,obsPots,
-            (totPots/obsPots) as expFactor
+            potlifts,`measure pots`,
+            (potlifts/`measure pots`) as expFactor
           from tblTotEff t left join tblObsEff o
           on t.fishery=o.fishery and
              t.area = o.area and
@@ -57,16 +57,43 @@ adfg.calcTotalCatchAB<-function(tblMPD,
 
   #expand to total catch abundance by sex
   qry <- "select
-            t.fishery,t.area,t.year,sex,
-            totPots,obsPots,expFactor,
+            t.fishery,t.area,t.year,
+            potlifts,`measure pots`,
+            expFactor,sex,
             obsAbund, obsWgt_kg,
-            (totPots/obsPots)*obsAbund/1000000 as totAbund,
-            (totPots/obsPots)*obsWgt_kg/1000000 as totBio
+            expFactor*obsAbund/1000     as totAbund,
+            expFactor*obsWgt_kg/1000000 as totBio
           from tblExpFacs t left join tblObsAB o
           on t.fishery=o.fishery and
              t.area = o.area and
              t.year = o.year;";
-  tblTotAB<-sqldf::sqldf(qry);
-  return(tblTotAB);
+  tmp<-sqldf::sqldf(qry);
+
+  tmp1<-tmp1<-reshape2::melt(tmp,id.vars=c("fishery","area","year","potlifts","measure pots","expFactor","sex"));
+  tmp1$variable<-as.character(tmp1$variable);
+  tmp1$type<-"observed";
+  tmp1$units<-"counts";
+  #----
+  idx<-tmp1$variable=="obsAbund";
+  tmp1$type[idx]    <-"observed";
+  tmp1$units[idx]   <-"--";
+  tmp1$variable[idx]<-"count";
+  #----
+  idx<-tmp1$variable=="obsWgt_kg";
+  tmp1$type[idx]    <-"observed";
+  tmp1$units[idx]   <-"kg";
+  tmp1$variable[idx]<-"weight";
+  #----
+  idx<-tmp1$variable=="totAbund";
+  tmp1$type[idx]    <-"expanded";
+  tmp1$units[idx]   <-"thousands";
+  tmp1$variable[idx]<-"abundance";
+  #----
+  idx<-tmp1$variable=="totBio";
+  tmp1$type[idx]    <-"expanded";
+  tmp1$units[idx]   <-"1000's t";
+  tmp1$variable[idx]<-"biomass";
+
+  return(tmp1);
 }
 
