@@ -22,14 +22,14 @@ tibble with columns
  * measure pots - number of observed pots (sample effort)
  * expFactor - expansion factor
  * sex - "male", "female", "undetermined", "hermaphrodite", or NA
- * variable - "count","weight","abundance", or "biomass"
+ * variable - "count", "weight", "abundance", or "biomass"
  * value - value of asociated variable
  * type - "observed" or "expanded"
- * units - "ones", "thousands", "kg" or "1000's t"
+ * units - "ones", "thousands", "kg" or "t"
 }
 \description{
 Function to calculate estimated total catch abundance by expanding observed abundance.
 }
 \details{
-Uses \code{sqldf::sqldf}.
+Uses \code{sqldf::sqldf}. Units for 'weight' are kg, for 'abundance' are thousands, and for 'biomass' are t.
 }

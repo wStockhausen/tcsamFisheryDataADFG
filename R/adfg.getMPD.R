@@ -26,6 +26,7 @@ adfg.getMPD<-function(csv="crab_dump-931-v17.csv"){
     stop(str);
   }
 
+
   #unique fishery names:
   # [1] "CK98" "CO00" "CO01" "CO02" "CO03" "CO04" "CO05" "CO98" "CO99" "CR00" "CR01" "CR02" "CR03" "CR04" "CR98" "CR99" "EI91" "EI92" "EO91" "EO92" "EO93" "QO00" "QO01"
   #[24] "QO02" "QO03" "QO04" "QO05" "QO06" "QO07" "QO08" "QO09" "QO10" "QO11" "QO12" "QO13" "QO14" "QO15" "QO16" "QO17" "QO94" "QO95" "QO96" "QO97" "QO98" "QO99" "QR93"
@@ -61,6 +62,9 @@ adfg.getMPD<-function(csv="crab_dump-931-v17.csv"){
   #--assign E/W 166W area based on statarea code (XXYYYY, where XX indicates lon of eastern edge of ADFG stat area)
   dfr$EWbySA  <- ifelse(as.numeric(stringr::str_sub(as.character(dfr$statarea),1,2))>=66,"West 166W","East 166W");
 
+  #determine fishery year corresponding to sample date
+  dfr$year<-adfg.ConvertDateToFisheryYear(dfr$sampdate);
+
   #--parse 4-character fishery codes
   dfr.pf<-parseFisheryCode(dfr$fishery);
 
@@ -73,13 +77,13 @@ adfg.getMPD<-function(csv="crab_dump-931-v17.csv"){
   # [1] "trip"         "adfg"         "sampdate"     "spn"          "statarea"     "mi_lon"       "mi_lat"       "spcode"
   # [9] "sex"          "size"         "legal"        "shell"        "clutch"       "eggdev"       "clutchcon"    "EWbyLon"
   #[17] "EWbySA"       "fishery_code" "fishery"      "area"         "year"        "count"
-  cols <- c("fishery","area","EWbySA","EWbyLon","year","fishery_code","trip","adfg","sampdate","spn","statarea","mi_lon","mi_lat",
+  cols <- c("fishery","area","EWbySA","EWbyLon","year","fishery_code","code_year","trip","adfg","sampdate","spn","statarea","mi_lon","mi_lat",
             "spcode","sex","shell","size","legal","count");
   dfrp <- dfrp[,cols];
 
   #fishery_codes to remove
-  rmv<-c("CK98",          #Pribs RKC or BKC fisheries (8 crab measured)
-         "QR95");         #RKC fisheries west of 166W        (10 crab measured)
+  rmv<-c("CK98",          #Pribs RKC or BKC fisheries   ( 8 crab measured)
+         "QR95");         #RKC fisheries west of 166W   (10 crab measured)
   idr <- dfrp$fishery_code %in% rmv;
 
   #fishery_codes to keep

@@ -14,7 +14,7 @@ dataframe with columns:
 * fishery code - f
 * fishery
 * area
-* year
+* code_year - year corresponding to fishery code (NOT! fishery year, apparently)
 }
 \description{
 Function to parse 4-character ADFG "fishery" codes.

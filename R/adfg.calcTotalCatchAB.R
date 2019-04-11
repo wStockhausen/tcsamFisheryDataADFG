@@ -15,12 +15,12 @@
 #'  * measure pots - number of observed pots (sample effort)
 #'  * expFactor - expansion factor
 #'  * sex - "male", "female", "undetermined", "hermaphrodite", or NA
-#'  * variable - "count","weight","abundance", or "biomass"
+#'  * variable - "count", "weight", "abundance", or "biomass"
 #'  * value - value of asociated variable
 #'  * type - "observed" or "expanded"
-#'  * units - "ones", "thousands", "kg" or "1000's t"
+#'  * units - "ones", "thousands", "kg" or "t"
 #'
-#' @details Uses \code{sqldf::sqldf}.
+#' @details Uses \code{sqldf::sqldf}. Units for 'weight' are kg, for 'abundance' are thousands, and for 'biomass' are t.
 #'
 #' @export
 #'
@@ -34,7 +34,7 @@ adfg.calcTotalCatchAB<-function(tblMPD,
   #calculate individual weights based on size
   wgt_kg<-tcsamFunctions::calc.WatZ(tblMPD$size,
                                     tblMPD$sex,
-                                    tblMPD$maturity);
+                                    tblMPD$maturity)/1000;#function result in g
   tblMPD$wgt_kg  <- wgt_kg;
 
   #calculate observed catch abundance by sex and size
@@ -61,8 +61,8 @@ adfg.calcTotalCatchAB<-function(tblMPD,
             potlifts,`measure pots`,
             expFactor,sex,
             obsAbund, obsWgt_kg,
-            expFactor*obsAbund/1000     as totAbund,
-            expFactor*obsWgt_kg/1000000 as totBio
+            expFactor*obsAbund/1000  as totAbund,
+            expFactor*obsWgt_kg/1000 as totBio
           from tblExpFacs t left join tblObsAB o
           on t.fishery=o.fishery and
              t.area = o.area and
@@ -91,7 +91,7 @@ adfg.calcTotalCatchAB<-function(tblMPD,
   #----
   idx<-tmp1$variable=="totBio";
   tmp1$type[idx]    <-"expanded";
-  tmp1$units[idx]   <-"1000's t";
+  tmp1$units[idx]   <-"t";
   tmp1$variable[idx]<-"biomass";
 
   return(tmp1);

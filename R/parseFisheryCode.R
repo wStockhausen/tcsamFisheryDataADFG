@@ -9,7 +9,7 @@
 #' * fishery code - f
 #' * fishery
 #' * area
-#' * year
+#' * code_year - year corresponding to fishery code (NOT! fishery year, apparently)
 #'
 #' @details Uses \code{stringr::sub}, \code{wtsUtilities::substituteValues} functions.
 #'
@@ -37,5 +37,5 @@ parseFisheryCode<-function(f){
                                             dfr.12$area);
   num34 <- as.numeric(char34);
   year <- ifelse(num34>50,1900+num34,2000+num34);
-  return(data.frame(list(fishery_code=f,fishery=fishery,area=area,year=year),stringsAsFactors=FALSE));
+  return(data.frame(list(fishery_code=f,fishery=fishery,area=area,code_year=year),stringsAsFactors=FALSE));
 }
