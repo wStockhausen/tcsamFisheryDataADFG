@@ -7,7 +7,7 @@
 adfg.ExportWideZCs(dfrSSs, dfrZCs, byFacs = c("fishery", "area", "sex",
   "shell condition", "year"), sizeCol = "size", valCol = "abundance",
   ssCol = "ss", csvSSs = "dfrSSs.csv", csvZCs = "dfrZCs.csv",
-  writeFiles = TRUE)
+  writeFiles = TRUE, verbose = FALSE)
 }
 \arguments{
 \item{dfrZCs}{- size composition dataframe}
@@ -25,6 +25,8 @@ adfg.ExportWideZCs(dfrSSs, dfrZCs, byFacs = c("fishery", "area", "sex",
 \item{csvZCs}{- name of csv file to save size compositions to}
 
 \item{writeFiles}{- flag (T/F) to write csv files (default=TRUE)}
+
+\item{verbose}{- flag (T/F) to print diagnostic information}
 
 \item{dfrSS}{- dataframe with sample size information}
 }

@@ -12,6 +12,7 @@
 #' @param csvSSs - name of csv file to save sample size to
 #' @param csvZCs - name of csv file to save size compositions to
 #' @param writeFiles - flag (T/F) to write csv files (default=TRUE)
+#' @param verbose - flag (T/F) to print diagnostic information
 #'
 #' @return A list with named elements
 #' * tblZCs - the wide-format size compositions
@@ -30,7 +31,8 @@ adfg.ExportWideZCs<-function(dfrSSs,
                              ssCol="ss",
                              csvSSs="dfrSSs.csv",
                              csvZCs="dfrZCs.csv",
-                             writeFiles=TRUE){
+                             writeFiles=TRUE,
+                             verbose=FALSE){
   #--aggregate sample sizes as appropriate
   ssFacs<-names(dfrSSs)[names(dfrSSs) %in% byFacs];
   strFacsSS<-paste0(paste0("s.`",ssFacs,"`"),collapse=",");
@@ -41,7 +43,7 @@ adfg.ExportWideZCs<-function(dfrSSs,
   qry<-gsub("&&facs",strFacsSS,qry,fixed=TRUE);
   qry<-gsub("&&ss",ssCol,      qry,fixed=TRUE);
 
-  cat(qry,"\n");
+  if (verbose) cat(qry,"\n");
   dfrSSp<-sqldf::sqldf(qry);
 
   #--aggregate ZCs as appropriate
@@ -53,7 +55,7 @@ adfg.ExportWideZCs<-function(dfrSSs,
   qry<-gsub("&&facs",  strFacs,qry,fixed=TRUE);
   qry<-gsub("&&valCol",valCol, qry,fixed=TRUE);
 
-  cat(qry,"\n");
+  if (verbose) cat(qry,"\n");
   dfrZCsp<-sqldf::sqldf(qry);
 
   #--convert ZCs to wide format
