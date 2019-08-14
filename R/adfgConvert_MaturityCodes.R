@@ -12,7 +12,7 @@
 #'
 #' @export
 #'
-adfg.ConvertMaturityCodes<-function(sex){
+adfgConvert_MaturityCodes<-function(sex){
   ms  <- rep("undetermined",length.out=length(sex));
   idx <- sex=="female";
   ms[idx] <- "mature"; #Ben Daly assumes all females are mature

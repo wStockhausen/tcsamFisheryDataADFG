@@ -4,14 +4,18 @@
 #' @description Function to extract measure pot data as a tibble from a csv file.
 #'
 #' @param csv - csv filename with measure pot data
+#' @param date_format - string ("yyyy-mm-dd" or "mm-dd-yyyy") indicating date format
 #'
-#' @return a tibble
+#' @return a tibble with columns "fishery","area","EWbySA","EWbyLon","year","fishery_code",
+#' "code_year","trip","adfg","sampdate","spn","statarea","mi_lon","mi_lat",
+#' "spcode","sex","shell","size","legal","count"
 #'
 #' @details Uses functions \code{readr::read_csv}, \code{stringr::str_sub}.
 #'
 #' @export
 #'
-adfg.getMPD<-function(csv="crab_dump-931-v17.csv"){
+adfgRead_MPD<-function(csv="crab_dump-931-v17.csv",
+                       date_format="yyyy-mm-dd"){
   #--read measure pot data file
   dfr <- readr::read_csv(csv);
   #column names should be:
@@ -42,10 +46,10 @@ adfg.getMPD<-function(csv="crab_dump-931-v17.csv"){
   #                     "TR" (BBRKC) "TT", (Tanner crab East)
 
   #convert sex codes to labels
-  dfr$sex <- adfg.ConvertSexCodes(dfr$sex);
+  dfr$sex <- adfgConvert_SexCodes(dfr$sex);
 
   #convert shell condition codes to labels
-  dfr$shell <- adfg.ConvertShellConditionCodes(dfr$shell);
+  dfr$shell <- adfgConvert_ShellConditionCodes(dfr$shell);
 
   #convert clutch fullness codes to labels
   #clutch (clutch fullness):
@@ -63,10 +67,16 @@ adfg.getMPD<-function(csv="crab_dump-931-v17.csv"){
   dfr$EWbySA  <- ifelse(as.numeric(stringr::str_sub(as.character(dfr$statarea),1,2))>=66,"West 166W","East 166W");
 
   #determine fishery year corresponding to sample date
-  dfr$year<-adfg.ConvertDateToFisheryYear(dfr$sampdate);
+  if (date_format=="yyyy-mm-dd"){
+    dfr$year<-adfgConvert_DateYYYYMMDDtoFisheryYear(dfr$sampdate);
+  } else if (date_format=="mm-dd-yyyy"){
+      dfr$year<-adfgConvert_DateMMDDYYYYtoFisheryYear(dfr$sampdate);
+  } else {
+    stop("#--ERROR!\n\tUnrecognized date format in adfg.getMPD(...).\n")
+  }
 
   #--parse 4-character fishery codes
-  dfr.pf<-parseFisheryCode(dfr$fishery);
+  dfr.pf<-adfgConvert_FisheryCodes(dfr$fishery);
 
   #combine columns and drop "fishery" column
   dfrp <- cbind(dfr,dfr.pf)
@@ -113,7 +123,7 @@ adfg.getMPD<-function(csv="crab_dump-931-v17.csv"){
   dfrp1$area[idx] <- "East 166W";
 
   #rename fisheries to canonical forms
-  dfrp1$fishery <- adfg.ConvertFisheryNames(dfrp1$fishery);
+  dfrp1$fishery <- adfgConvert_FisheryNames(dfrp1$fishery);
 
   return(dfrp1);
 }

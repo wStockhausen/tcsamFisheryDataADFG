@@ -3,8 +3,8 @@
 #'
 #' @description Function to calculate size compositions from measure pot data.
 #'
-#' @param dfr - data.frame from function \code{adfg.extractMPD}
-#' @param writeCSV - flag (T/F) to write table to csv file
+#' @param dfr   - data.frame from function \code{adfgRead_MPD}
+#' @param fn - name of file to write csv to (or NULL not to write)
 #'
 #' @return a dataframe with columns
 #' * year
@@ -20,8 +20,8 @@
 #'
 #' @export
 #'
-adfg.calcZCsFromMPD<-function(dfr,
-                              writeCSV=FALSE){
+adfgZCs_CalcTotZCsFromMPD<-function(dfr,
+                                    fn=NULL){
   #extract data for size compositions
   Sum <- wtsUtilities::Sum;
   qry<-"select
@@ -34,8 +34,6 @@ adfg.calcZCsFromMPD<-function(dfr,
         group by fishery,area,year,sex,shell,size
         order by fishery,area,year,sex,shell,size;";
   dfrp2<-sqldf::sqldf(qry);
-  ymn <- min(dfrp2$year,na.rm=TRUE);
-  ymx <- max(dfrp2$year,na.rm=TRUE);
-  if (writeCSV) write.csv(dfrp2,file=paste0(fnZCs,".",ymn,"-",ymx,".csv"),row.names=FALSE);
+  if (!is.null(fn)) write.csv(dfrp2,file=fn,row.names=FALSE);
   return(dfrp2);
 }

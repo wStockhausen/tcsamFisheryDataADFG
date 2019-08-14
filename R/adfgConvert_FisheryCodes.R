@@ -3,19 +3,19 @@
 #'
 #' @description Function to parse 4-character ADFG "fishery" codes.
 #'
-#' @param f
+#' @param f -  vetor of fishery codes to parse
 #'
 #' @return dataframe with columns:
 #' * fishery code - f
-#' * fishery
-#' * area
+#' * fishery - RKC, snow crab, Tanner crab
+#' * area - Bering Sea, Bristol Bay, CDQ, East, West, UNKNOWN
 #' * code_year - year corresponding to fishery code (NOT! fishery year, apparently)
 #'
 #' @details Uses \code{stringr::sub}, \code{wtsUtilities::substituteValues} functions.
 #'
 #' @export
 #'
-parseFisheryCode<-function(f){
+adfgConvert_FisheryCodes<-function(f){
   char12 <- stringr::str_sub(f,start=1,end=2);
   char34 <- stringr::str_sub(f,start=3,end=4);
   dfr.12 <- rbind(data.frame(orig="CK",target="RKC or BKC", area= "CDQ",        stringsAsFactors=FALSE),

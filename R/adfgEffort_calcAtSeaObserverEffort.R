@@ -1,7 +1,7 @@
 #'
-#' @title Calculate at-sea observer sampling effort
+#' @title Calculate at-sea observer sampling effort from measure pot data
 #'
-#' @description Funcrion to calculate at-sea observer sampling effort.
+#' @description Function to calculate at-sea observer sampling effort from measure pot data.
 #'
 #' @param tbl - measure pot data table from \code{adfg.extractMPD}
 #'
@@ -17,7 +17,7 @@
 #'
 #' @export
 #'
-adfg.calcAtSeaObserverEffort<-function(tbl){
+adfgEffort_calcAtSeaObserverEffort<-function(tbl){
   #select unique sampled pots
   qry <- "select distinct
             fishery, area, year, trip, adfg, sampdate, spn

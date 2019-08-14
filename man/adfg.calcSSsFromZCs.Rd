@@ -7,15 +7,15 @@
 adfg.calcSSsFromZCs(dfr, writeCSV = FALSE)
 }
 \arguments{
-\item{dfr}{- data.frame from function \code{adfg.calcZCsFromMPD}}
+\item{dfr}{- data.frame from call to function \code{adfg.ExtractRawZCsFromMPD}}
 
 \item{writeCSV}{- flag (T/F) to write table to csv file}
 }
 \value{
 a dataframe with columns
-* year
 * fishery
 * area
+* year
 * sex
 * maturity
 * shell condition

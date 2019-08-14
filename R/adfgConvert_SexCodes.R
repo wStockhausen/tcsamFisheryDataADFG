@@ -13,7 +13,7 @@
 #'
 #' @export
 #'
-adfg.ConvertSexCodes<-function(x){
+adfgConvert_SexCodes<-function(x){
   #unique sex: 1 2 3 0
   sx.codes<-c(1,2,3,0);
   sx.strs <-c("male","female","hermaphrodite","undetermined");

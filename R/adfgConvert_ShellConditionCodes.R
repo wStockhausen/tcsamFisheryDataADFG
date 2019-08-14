@@ -13,7 +13,7 @@
 #'
 #' @export
 #'
-adfg.ConvertShellConditionCodes<-function(x){
+adfgConvert_ShellConditionCodes<-function(x){
   #unique shell: -9,0,1,2,3,4,5,9
   sc.codes<-c(      -9,           0,         1,          2,         3,           4,          5,           9);
   sc.strs <-c("undetermined","new shell","new shell","new shell","old shell","old shell","old shell","new shell");
