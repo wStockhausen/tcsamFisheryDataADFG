@@ -5,14 +5,17 @@
 \title{Write ADFG data fo a TCSAM input file}
 \usage{
 adfgWrite_TCSAMInputFile(fishery = NULL, fn = "Data.Fishery.ADFG.inp",
-  dfrRC_ABs = NULL, dfrRC_ZCs = NULL, dfrRC_SSs = NULL,
-  dfrTC_ABs = NULL, dfrTC_ZCs = NULL, dfrTC_SSs = NULL,
-  dfrEffort = NULL, rcCutPts = NULL, tcCutPts = NULL)
+  closed = NULL, dfrRC_ABs = NULL, dfrRC_ZCs = NULL,
+  dfrRC_SSs = NULL, dfrTC_ABs = NULL, dfrTC_ZCs = NULL,
+  dfrTC_SSs = NULL, dfrEffort = NULL, rcCutPts = NULL,
+  tcCutPts = NULL, unitsBiomass = "THOUSANDS_MT")
 }
 \arguments{
 \item{fishery}{- TCSAM fishery name}
 
 \item{fn}{- output file name}
+
+\item{closed}{- vector of years when fishery was closed}
 
 \item{dfrRC_ABs}{- dataframe with retained catch abundance/biomass data}
 
@@ -29,6 +32,8 @@ adfgWrite_TCSAMInputFile(fishery = NULL, fn = "Data.Fishery.ADFG.inp",
 \item{rcCutPts}{- vector with cutpts used for retained catch size comps}
 
 \item{tcCutPts}{- vector with cutpts used for total catch size comps}
+
+\item{unitsBiomass}{- units for output biomass ("THOUSANDS_MT" [default],"MILLIONS_LBS","KG")}
 
 \item{dfrTEffort}{- dataframe with fishery effort}
 }

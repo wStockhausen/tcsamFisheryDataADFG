@@ -5,6 +5,7 @@
 #'
 #' @param fishery - TCSAM fishery name
 #' @param fn - output file name
+#' @param closed - vector of years when fishery was closed
 #' @param dfrRC_ABs - dataframe with retained catch abundance/biomass data
 #' @param dfrRC_ZCs - dataframe with retained catch size composition data
 #' @param dfrRC_SSs - dataframe with retained catch sample size information
@@ -14,6 +15,7 @@
 #' @param dfrTEffort - dataframe with fishery effort
 #' @param rcCutPts - vector with cutpts used for retained catch size comps
 #' @param tcCutPts - vector with cutpts used for total catch size comps
+#' @param unitsBiomass - units for output biomass ("THOUSANDS_MT" [default],"MILLIONS_LBS","KG")
 #'
 #' @return null
 #'
@@ -23,6 +25,7 @@
 #'
 adfgWrite_TCSAMInputFile<-function(fishery=NULL,
                                    fn="Data.Fishery.ADFG.inp",
+                                   closed=NULL,
                                    dfrRC_ABs=NULL,
                                    dfrRC_ZCs=NULL,
                                    dfrRC_SSs=NULL,
@@ -31,10 +34,25 @@ adfgWrite_TCSAMInputFile<-function(fishery=NULL,
                                    dfrTC_SSs=NULL,
                                    dfrEffort=NULL,
                                    rcCutPts=NULL,
-                                   tcCutPts=NULL){
+                                   tcCutPts=NULL,
+                                   unitsBiomass="THOUSANDS_MT"){
 
-  MILLION<-1000000;      #scale to convert to millions
+  #--SCALE CONSTANTS
+  MILLIONS<-1000000;      #scale to convert to millions
   LBStoKG <- 0.45359237; #multiplicative factor to get kg from lbs
+  #--determine scaling for output biomass (input in kg)
+  if (unitsBiomass=="THOUSANDS_MT") {
+    sclB <- 1.0/MILLIONS;
+  } else if (unitsBiomass=="MILLIONS_LBS") {
+    sclB <- 1.0/(MILLIONS*LBStoKG);
+  } else if (unitsBiomass=="KG") {
+    sclB <- 1.0;
+  } else {
+    msg<-paste0("\nERROR in adfgWrite_TCSAMInputFile.",
+                "\ninput value for unitsBiomass ('",unitsBiomass,"') is invalid.",
+                "\nValid values are 'THOUSANDS_MT','MILLIONS_LBS','KG'.\n");
+    stop(msg);
+  }
 
   #--function to make substitutions for "undetermined"
   subForTCSAM<-function(x,str){
@@ -43,6 +61,7 @@ adfgWrite_TCSAMInputFile<-function(fishery=NULL,
     return(xp);
     }
 
+  #--column names in dataframes
   yr  <- "year";
   flt <- "fishery"; #--fleet
   are <- "area";
@@ -54,6 +73,7 @@ adfgWrite_TCSAMInputFile<-function(fishery=NULL,
   bio <- "biomass (kg)";
   ss  <- "ss";
 
+  #--write flags for various quantities
   writeRCA<-!is.null(dfrRC_ABs);
   writeRCB<-!is.null(dfrRC_ABs);
   writeRCZ<-!is.null(dfrRC_ZCs);
@@ -71,10 +91,10 @@ adfgWrite_TCSAMInputFile<-function(fishery=NULL,
     }
     con<-file(fn,open="w");
 
-    cat("#----------------------------------------------------------------------------\n",file=con);
-    cat("#--TCSAM02 model file for abundance, biomass and/or size comp time series    \n",file=con);
-    cat("#--for retained and/or total catch in the directed and incidental fisheries. \n",file=con);
-    cat("#----------------------------------------------------------------------------\n",file=con);
+    cat("#---------------------------------------------------------------------------------------\n",file=con);
+    cat("#--TCSAM02 model file for abundance, biomass and/or size comp time series               \n",file=con);
+    cat("#--for retained and/or total catch and effort in the directed and incidental fisheries. \n",file=con);
+    cat("#---------------------------------------------------------------------------------------\n",file=con);
     cat("FISHERY             #required keyword\n",file=con);
     cat(fishery,"       #fishery name\n",file=con,sep='');
     cat("FALSE      #has index catch data?\n",file=con);
@@ -99,6 +119,7 @@ adfgWrite_TCSAMInputFile<-function(fishery=NULL,
         cat("#------------NUMBERS-AT-SIZE DATA-----------\n",file=con);
       } else {
         tmp <- dfrRC_ABs;
+        if (!is.null(closed)) tmp <- tmp[!(tmp$year %in% closed),];
         uYs<-sort(unique(tmp$year));
         uFCs<-unique(tmp[,c(sx,mt,sc)]);
         cat("AGGREGATE_ABUNDANCE     #required keyword\n",file=con);
@@ -131,6 +152,7 @@ adfgWrite_TCSAMInputFile<-function(fishery=NULL,
         cat("#--none\n",file=con);
       } else {
         tmp <- dfrRC_ABs;
+        if (!is.null(closed)) tmp <- tmp[!(tmp$year %in% closed),];
         uYs<-sort(unique(tmp$year));
         uFCs<-unique(tmp[,c(sx,mt,sc)]);
         cat("AGGREGATE_BIOMASS       #required keyword\n",file=con);
@@ -138,7 +160,7 @@ adfgWrite_TCSAMInputFile<-function(fishery=NULL,
         cat("NORM2                   #likelihood type\n",file=con);
         cat("20.0                    #likelihood weight\n",file=con);
         cat(length(uYs),"                      #number of years\n",file=con,sep='');
-        cat("MILLIONS_LBS            # units, catch biomass\n",file=con);
+        cat(unitsBiomass,"            # units, catch biomass\n",file=con);
         cat(nrow(uFCs),"		#number of factor combinations\n",file=con);
         for (iFC in 1:nrow(uFCs)){
           fc<-uFCs[iFC,];
@@ -151,7 +173,7 @@ adfgWrite_TCSAMInputFile<-function(fishery=NULL,
                   (tmp[[sx]]==fc[[sx]])&
                   (tmp[[mt]]==fc[[mt]])&
                   (tmp[[sc]]==fc[[sc]]);
-            cat(y,tmp[idb,bio]/MILLION,0.05,"\n",sep="    ",file=con);
+            cat(y,sclB*tmp[idb,bio],0.05,"\n",sep="    ",file=con);
           }#--y
         }#--fc
         rm(tmp,uYs,uFCs,fc,y,idb);
@@ -163,6 +185,7 @@ adfgWrite_TCSAMInputFile<-function(fishery=NULL,
         cat("#--none\n",file=con);
       } else {
         tmp <- dfrRC_ZCs;
+        if (!is.null(closed)) tmp <- tmp[!(tmp$year %in% closed),];
         cutpts<-rcCutPts;
         bins<-(cutpts[2:length(cutpts)]+cutpts[1:(length(cutpts)-1)])/2;
         uYs<-sort(unique(tmp$year));
@@ -200,7 +223,7 @@ adfgWrite_TCSAMInputFile<-function(fishery=NULL,
                       (tmp[[sx]]==fc[[sx]])&
                       (tmp[[mt]]==fc[[mt]])&
                       (tmp[[sc]]==fc[[sc]]);
-                rw<-paste(tmp[idz,abd]/MILLION,collapse=" ");
+                rw<-paste(tmp[idz,abd]/MILLIONS,collapse=" ");
                 cat(y,dfrSS[ids,ss],rw,"\n",sep="    ",file=con);
               }#--y
         }#--iFC
@@ -225,6 +248,7 @@ adfgWrite_TCSAMInputFile<-function(fishery=NULL,
         cat("#---none\n",file=con);
       } else {
         tmp <- dfrTC_ABs;
+        if (!is.null(closed)) tmp <- tmp[!(tmp$year %in% closed),];
         uYs<-sort(unique(tmp[[yr]]));
         uFCs<-unique(tmp[,c(sx,mt,sc)]);
         cat("AGGREGATE_ABUNDANCE     #required keyword\n",file=con);
@@ -245,7 +269,7 @@ adfgWrite_TCSAMInputFile<-function(fishery=NULL,
                   (tmp[[sx]]==fc[[sx]])&
                   (tmp[[mt]]==fc[[mt]])&
                   (tmp[[sc]]==fc[[sc]]);
-            cat(y,tmp[ida,abd]/MILLION,0.20,"\n",sep="    ",file=con);
+            cat(y,tmp[ida,abd]/MILLIONS,0.20,"\n",sep="    ",file=con);
           }#--y
         }#--fc
         rm(tmp,uYs,uFCs,fc,y,ida);
@@ -257,6 +281,7 @@ adfgWrite_TCSAMInputFile<-function(fishery=NULL,
         cat("#--none\n",file=con);
       } else {
         tmp <- dfrTC_ABs;
+        if (!is.null(closed)) tmp <- tmp[!(tmp$year %in% closed),];
         uYs<-sort(unique(tmp[[yr]]));
         uFCs<-unique(tmp[,c(sx,mt,sc)]);
         cat("AGGREGATE_BIOMASS       #required keyword\n",file=con);
@@ -264,7 +289,7 @@ adfgWrite_TCSAMInputFile<-function(fishery=NULL,
         cat("NORM2                   #likelihood type\n",file=con);
         cat("20.0                     #likelihood weight\n",file=con);
         cat(length(uYs),"                      #number of years\n",file=con,sep='');
-        cat("THOUSANDS_MT            # units, catch biomass\n",file=con);
+        cat(unitsBiomass,"            # units, catch biomass\n",file=con);
         cat(nrow(uFCs),"		#number of factor combinations\n",file=con);
         for (iFC in 1:nrow(uFCs)){
           fc<-uFCs[iFC,];
@@ -277,7 +302,7 @@ adfgWrite_TCSAMInputFile<-function(fishery=NULL,
                   (tmp[[sx]]==fc[[sx]])&
                   (tmp[[mt]]==fc[[mt]])&
                   (tmp[[sc]]==fc[[sc]]);
-            cat(y,tmp[idb,bio]/MILLION,0.20,"\n",sep="    ",file=con);
+            cat(y,sclB*tmp[idb,bio],0.20,"\n",sep="    ",file=con);
           }#--y
         }#--fc
         rm(tmp,uYs,uFCs,fc,y,idb);
@@ -289,6 +314,7 @@ adfgWrite_TCSAMInputFile<-function(fishery=NULL,
         cat("#--none\n",file=con);
       } else {
         tmp <- dfrTC_ZCs;
+        if (!is.null(closed)) tmp <- tmp[!(tmp$year %in% closed),];
         cutpts<-tcCutPts;
         bins<-(cutpts[2:length(cutpts)]+cutpts[1:(length(cutpts)-1)])/2;
         uYs<-sort(unique(tmp[[yr]]));
@@ -326,7 +352,7 @@ adfgWrite_TCSAMInputFile<-function(fishery=NULL,
                       (tmp[[sx]]==fc[[sx]])&
                       (tmp[[mt]]==fc[[mt]])&
                       (tmp[[sc]]==fc[[sc]]);
-                rw<-paste(tmp[idz,abd]/MILLION,collapse=" ");
+                rw<-paste(tmp[idz,abd]/MILLIONS,collapse=" ");
                 cat(y,dfrSS[ids,ss],rw,"\n",sep="    ",file=con);
               }#--y
         }#--iFC
@@ -338,6 +364,7 @@ adfgWrite_TCSAMInputFile<-function(fishery=NULL,
       cat("#---none\n",file=con);
     } else {
       tmp<-dfrEffort;
+      if (!is.null(closed)) tmp <- tmp[!(tmp$year %in% closed),];
       uYs<-sort(unique(tmp$year));
       cat("EFFORT_DATA    #required keyword\n",file=con);
       cat("[1992:-1]  #interval over which to average effort/fishing mortality\n",file=con);
