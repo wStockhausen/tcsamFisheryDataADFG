@@ -4,8 +4,11 @@
 \alias{adfgRead_DirectedEffortFile}
 \title{Read the directed fishery effort from a csv file}
 \usage{
-adfgRead_DirectedEffortFile(csv = "FishingEffortByFleet.1990-2017.csv",
-  skip = 2, verbose = FALSE)
+adfgRead_DirectedEffortFile(
+  csv = "FishingEffortByFleet.1990-2017.csv",
+  skip = 2,
+  verbose = FALSE
+)
 }
 \arguments{
 \item{csv}{- the csv file name}

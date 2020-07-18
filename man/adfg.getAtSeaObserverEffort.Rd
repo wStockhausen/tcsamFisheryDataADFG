@@ -4,9 +4,10 @@
 \alias{adfg.getAtSeaObserverEffort}
 \title{Get at-sea observer effort from a csv file}
 \usage{
-
-  adfg.getAtSeaObserverEffort(csv = "AtSeaCrabObserverEffort.1990-2018.csv",
-  skip = 4)
+adfg.getAtSeaObserverEffort(
+  csv = "AtSeaCrabObserverEffort.1990-2018.csv",
+  skip = 4
+)
 }
 \arguments{
 \item{csv}{- filename to read}

@@ -5,20 +5,28 @@
 \alias{adfg.calcTotalCatchZCs}
 \title{Calculate expanded annual total catch size compositions by crab fishery, area, year, sex and shell condition}
 \usage{
-adfg.calcTotalCatchZCs(tblTotAB, tblTotZCsRaw, cutpts = seq(from = 5, to
-  = 185, by = 5), truncate.low = TRUE, truncate.high = FALSE)
+adfg.calcTotalCatchZCs(
+  tblTotAB,
+  tblTotZCsRaw,
+  cutpts = seq(from = 5, to = 185, by = 5),
+  truncate.low = TRUE,
+  truncate.high = FALSE
+)
 
-adfg.calcTotalCatchZCs(tblTotAB, tblTotZCsRaw, cutpts = seq(from = 5, to
-  = 185, by = 5), truncate.low = TRUE, truncate.high = FALSE)
+adfg.calcTotalCatchZCs(
+  tblTotAB,
+  tblTotZCsRaw,
+  cutpts = seq(from = 5, to = 185, by = 5),
+  truncate.low = TRUE,
+  truncate.high = FALSE
+)
 }
 \arguments{
 \item{tblTotAB}{- dataframe with total catch abundance and biomass by fishery, area, year, sex, and shell condition}
 
-\item{tblTotZCsRaw}{- "raw" total catch size compositions (counts) by fishery, area, year, sex, shell condition and size}
+\item{tblTotZCsRaw}{-  data.frame from call to function \code{adfg.getMPD}}
 
 \item{tblRetAB}{- dataframe with total catch abundance and biomass by fishery, area, year, sex, an shell condition}
-
-\item{tblTotZCsRaw}{-  data.frame from call to function \code{adfg.getMPD}}
 }
 \value{
 a datarame with columns

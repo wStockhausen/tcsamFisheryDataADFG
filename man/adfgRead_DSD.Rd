@@ -4,8 +4,7 @@
 \alias{adfgRead_DSD}
 \title{Extract dockside data (DSD) as a tibble from a csv file}
 \usage{
-adfgRead_DSD(csv = "TANNER-1990-2018_dockside.csv",
-  date_format = "yyyy-mm-dd")
+adfgRead_DSD(csv = "TANNER-1990-2018_dockside.csv", date_format = "yyyy-mm-dd")
 }
 \arguments{
 \item{csv}{- csv filename with dockside data}

@@ -4,10 +4,18 @@
 \alias{adfg.ExportWideZCs}
 \title{Export size compositions in wide format}
 \usage{
-adfg.ExportWideZCs(dfrSSs, dfrZCs, byFacs = c("fishery", "area", "sex",
-  "shell condition", "year"), sizeCol = "size", valCol = "abundance",
-  ssCol = "ss", csvSSs = "dfrSSs.csv", csvZCs = "dfrZCs.csv",
-  writeFiles = TRUE, verbose = FALSE)
+adfg.ExportWideZCs(
+  dfrSSs,
+  dfrZCs,
+  byFacs = c("fishery", "area", "sex", "shell condition", "year"),
+  sizeCol = "size",
+  valCol = "abundance",
+  ssCol = "ss",
+  csvSSs = "dfrSSs.csv",
+  csvZCs = "dfrZCs.csv",
+  writeFiles = TRUE,
+  verbose = FALSE
+)
 }
 \arguments{
 \item{dfrZCs}{- size composition dataframe}

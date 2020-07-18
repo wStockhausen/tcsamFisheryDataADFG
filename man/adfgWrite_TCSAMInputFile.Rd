@@ -4,11 +4,21 @@
 \alias{adfgWrite_TCSAMInputFile}
 \title{Write ADFG data fo a TCSAM input file}
 \usage{
-adfgWrite_TCSAMInputFile(fishery = NULL, fn = "Data.Fishery.ADFG.inp",
-  closed = NULL, dfrRC_ABs = NULL, dfrRC_ZCs = NULL,
-  dfrRC_SSs = NULL, dfrTC_ABs = NULL, dfrTC_ZCs = NULL,
-  dfrTC_SSs = NULL, dfrEffort = NULL, rcCutPts = NULL,
-  tcCutPts = NULL, unitsBiomass = "THOUSANDS_MT")
+adfgWrite_TCSAMInputFile(
+  fishery = NULL,
+  fn = "Data.Fishery.ADFG.inp",
+  closed = NULL,
+  dfrRC_ABs = NULL,
+  dfrRC_ZCs = NULL,
+  dfrRC_SSs = NULL,
+  dfrTC_ABs = NULL,
+  dfrTC_ZCs = NULL,
+  dfrTC_SSs = NULL,
+  dfrEffort = NULL,
+  rcCutPts = NULL,
+  tcCutPts = NULL,
+  unitsBiomass = "THOUSANDS_MT"
+)
 }
 \arguments{
 \item{fishery}{- TCSAM fishery name}

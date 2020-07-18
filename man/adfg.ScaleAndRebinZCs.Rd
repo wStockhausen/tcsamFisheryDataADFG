@@ -4,10 +4,19 @@
 \alias{adfg.ScaleAndRebinZCs}
 \title{Scale and rebin size compositions}
 \usage{
-adfg.ScaleAndRebinZCs(mdfrScl, mdfrZCs, aggFacs = c("shell condition"),
-  scaleCol = "abundance", sizeCol = "size", valCol = "count",
-  cutpts = seq(from = 5, to = 185, by = 5), truncate.low = TRUE,
-  truncate.high = FALSE, returnSampleSizes = FALSE, verbose = FALSE)
+adfg.ScaleAndRebinZCs(
+  mdfrScl,
+  mdfrZCs,
+  aggFacs = c("shell condition"),
+  scaleCol = "abundance",
+  sizeCol = "size",
+  valCol = "count",
+  cutpts = seq(from = 5, to = 185, by = 5),
+  truncate.low = TRUE,
+  truncate.high = FALSE,
+  returnSampleSizes = FALSE,
+  verbose = FALSE
+)
 }
 \arguments{
 \item{mdfrScl}{- dataframe with scaling information}
