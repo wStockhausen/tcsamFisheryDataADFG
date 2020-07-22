@@ -7,11 +7,11 @@
 adfg.getTotalCatchZCs(csv, skip = 2, progress = FALSE)
 }
 \arguments{
+\item{csv}{- the csv file name}
+
 \item{skip}{- number of lines to skip (default=5)}
 
 \item{progress}{- flag to show progress reading csv file}
-
-\item{-}{the csv file name}
 }
 \value{
 a tibble with columns

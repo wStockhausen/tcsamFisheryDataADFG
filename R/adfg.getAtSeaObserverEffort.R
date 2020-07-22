@@ -32,7 +32,7 @@ adfg.getAtSeaObserverEffort<-function(csv="AtSeaCrabObserverEffort.1990-2018.csv
   tbl <- tbl %>% tibble::add_column(area);
   tbl$area[idE] <- "East 166W";
   tbl$area[idW] <- "West 166W";
-  tbl$fishery <- adfg.ConvertFisheryNames(tbl$fishery);
+  tbl$fishery <- adfg.Convert_FisheryNames(tbl$fishery);
   tbl$year <- as.numeric(stringr::str_sub(tbl$year,1,4));
   tbl <- tbl[,c("fishery","area","year","summary pots","measure pots")];
   return(tbl);

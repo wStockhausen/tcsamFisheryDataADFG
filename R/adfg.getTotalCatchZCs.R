@@ -3,7 +3,7 @@
 #'
 #' @description Function to get annual total catch size compositions by crab fishery from a csv file.
 #'
-#' @param - the csv file name
+#' @param csv - the csv file name
 #' @param skip - number of lines to skip (default=5)
 #' @param progress - flag to show progress reading csv file
 #'
@@ -16,7 +16,11 @@
 #' * size
 #' * count
 #'
-#' @details Uses \code{readr::read_csv} and \code{stringr::str_sub}.
+#' @details The input csv file should be one provided by ADFG.
+#' Uses \code{readr::read_csv} and \code{stringr::str_sub}.
+#'
+#' @importFrom readr read_csv
+#' @importFrom stringr str_sub
 #'
 #' @export
 #'

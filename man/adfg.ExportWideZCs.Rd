@@ -18,6 +18,8 @@ adfg.ExportWideZCs(
 )
 }
 \arguments{
+\item{dfrSSs}{- dataframe with sample size information}
+
 \item{dfrZCs}{- size composition dataframe}
 
 \item{byFacs}{- character vector of size composition factors to include in ouptut}
@@ -35,8 +37,6 @@ adfg.ExportWideZCs(
 \item{writeFiles}{- flag (T/F) to write csv files (default=TRUE)}
 
 \item{verbose}{- flag (T/F) to print diagnostic information}
-
-\item{dfrSS}{- dataframe with sample size information}
 }
 \value{
 A list with named elements

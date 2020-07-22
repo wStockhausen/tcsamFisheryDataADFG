@@ -4,7 +4,10 @@
 #' @description Function to calculate expanded annual total catch size compositions by crab fishery, area, year, sex and shell condition.
 #'
 #' @param tblTotAB - dataframe with total catch abundance and biomass by fishery, area, year, sex, and shell condition
-#' @param tblTotZCsRaw -  data.frame from call to function \code{adfg.getMPD}
+#' @param tblTotZCsRaw -  data.frame from call to function \code{adfg.ReadMPD}
+#' @param cutpts - cutpts for bins
+#' @param truncate.low - flag to exclude crab with sizes less than minimum cutpt (default=TRUE)
+#' @param truncate.high - flag to exclude crab with sizes greater than maximum cutpt (default=FALSE)
 #'
 #' @return a dataframe with columns
 #' * fishery
@@ -17,6 +20,9 @@
 #'
 #' @details Uses \code{sqldf::sqldf} and \code{reshape2::dcast}. tblTotZCsRaw should have columns
 #' "fishery", "area", "year", "sex", "maturity", "shell condition", "size" and "count".
+#'
+#' @importFrom reshape2 dcast
+#' @importFrom sqldf sqldf
 #'
 #' @export
 #'
@@ -44,11 +50,11 @@ adfg.calcTotalCatchZCs<-function(tblTotAB,
           z.sex               = s.sex and
           z.year              = s.year
         order by z.fishery, z.area, z.sex, z.maturity, z.`shell condition`, z.year, z.size;";
-  tblRetZCsNormd<-sqldf::sqldf(qry);
+  tblTotZCsNormd<-sqldf::sqldf(qry);
   #--scale normalized size comps by abundance by FAYX
   qry<-"select z.fishery, z.area, z.sex, z.maturity, z.`shell condition`, z.year, z.size,
                n.abundance*z.p as abundance
-        from tblRetZCsNormd as z left join mdfrABp as n
+        from tblTotZCsNormd as z left join mdfrABp as n
         on
           z.fishery           = n.fishery and
           z.area              = n.area and

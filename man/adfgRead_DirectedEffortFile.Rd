@@ -19,10 +19,12 @@ adfgRead_DirectedEffortFile(
 }
 \value{
 a tibble with columns
-* fishery - canonical fishery name
-* area - fishery area
-* year - crab year
-* effort - number of potlifts
+\itemize{
+  \item{fishery - canonical fishery name}
+  \item{area - fishery area}
+  \item{year - crab year}
+  \item{effort - number of potlifts}
+}
 }
 \description{
 Function to read the directed fishery effort from a csv file.
@@ -30,4 +32,13 @@ Function to read the directed fishery effort from a csv file.
 \details{
 Uses \code{readr::read_csv}, \code{stringr::str_sub}, \code{dplyr::mutate},
 \code{tidyr::gather}, and \code{sqldf::sqldf}.
+
+The input csv file should have columns
+\itemize{
+  \item{fishery year in crab year format (i.e., YYYY/YY)}
+  \item{area - "E","W", or "all EBS"}
+  \item{Directed Tanner - effort (number of pots fished)}
+  \item{Directed Snow   - effort (number of pots fished)}
+  \item{Directed BBRKC  - effort (number of pots fished)}
+}
 }

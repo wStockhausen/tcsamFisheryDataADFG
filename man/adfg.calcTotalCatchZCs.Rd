@@ -24,7 +24,13 @@ adfg.calcTotalCatchZCs(
 \arguments{
 \item{tblTotAB}{- dataframe with total catch abundance and biomass by fishery, area, year, sex, and shell condition}
 
-\item{tblTotZCsRaw}{-  data.frame from call to function \code{adfg.getMPD}}
+\item{tblTotZCsRaw}{-  data.frame from call to function \code{adfg.ReadMPD}}
+
+\item{cutpts}{- cutpts for bins}
+
+\item{truncate.low}{- flag to exclude crab with sizes less than minimum cutpt (default=TRUE)}
+
+\item{truncate.high}{- flag to exclude crab with sizes greater than maximum cutpt (default=FALSE)}
 
 \item{tblRetAB}{- dataframe with total catch abundance and biomass by fishery, area, year, sex, an shell condition}
 }

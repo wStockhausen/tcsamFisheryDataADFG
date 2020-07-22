@@ -3,7 +3,7 @@
 #'
 #' @description Function to export size compositions in wide format.
 #'
-#' @param dfrSS - dataframe with sample size information
+#' @param dfrSSs - dataframe with sample size information
 #' @param dfrZCs - size composition dataframe
 #' @param byFacs - character vector of size composition factors to include in ouptut
 #' @param sizeCol  - name of column in dfrZCs with sizes
@@ -20,6 +20,8 @@
 #'
 #' @details Uses \code{sqldf::sqldf}, \code{reshape2::dcast}, and \code{wtsUtilities::Sum}.
 #' Input column names should given "as is" and **NOT** be backquoted.
+#'
+#' @importFrom utils write.csv
 #'
 #' @export
 #'

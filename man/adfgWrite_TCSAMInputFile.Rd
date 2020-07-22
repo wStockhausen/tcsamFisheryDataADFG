@@ -17,6 +17,14 @@ adfgWrite_TCSAMInputFile(
   dfrEffort = NULL,
   rcCutPts = NULL,
   tcCutPts = NULL,
+  likeRC = "NORM2",
+  cvRC = 0.05,
+  minErrRCa = 100,
+  minErrRCb = 100,
+  likeTC = "NORM2",
+  cvTC = 0.2,
+  minErrTCa = 2000,
+  minErrTCb = 2000,
   unitsBiomass = "THOUSANDS_MT"
 )
 }
@@ -39,13 +47,29 @@ adfgWrite_TCSAMInputFile(
 
 \item{dfrTC_SSs}{- dataframe with total catch sample size information}
 
+\item{dfrEffort}{- dataframe with fishery effort}
+
 \item{rcCutPts}{- vector with cutpts used for retained catch size comps}
 
 \item{tcCutPts}{- vector with cutpts used for total catch size comps}
 
-\item{unitsBiomass}{- units for output biomass ("THOUSANDS_MT" [default],"MILLIONS_LBS","KG")}
+\item{likeRC}{- likelihood type for retained catch ABs ("NORM2","NORMAL", or "LOGNORMAL")}
 
-\item{dfrTEffort}{- dataframe with fishery effort}
+\item{cvRC}{- cv for retained catch above min error (default=0.05)}
+
+\item{minErrRCa}{- min error in retained catch abundance (default=100)}
+
+\item{minErrRCb}{- min error in retained catch biomass   (default=100 kg)}
+
+\item{likeTC}{- likelihood type for total catch ABs ("NORM2","NORMAL", or "LOGNORMAL")}
+
+\item{cvTC}{- cv for total catch above min error (default=0.20)}
+
+\item{minErrTCa}{- min error in total catch abundance (default=2000)}
+
+\item{minErrTCb}{- min error in total catch biomass   (default=2000 kg)}
+
+\item{unitsBiomass}{- units for output biomass ("THOUSANDS_MT" [default],"MILLIONS_LBS","KG")}
 }
 \value{
 null

@@ -4,10 +4,10 @@
 \alias{adfgConvert_DateMMDDYYYYtoFisheryYear}
 \title{Convert a vector of dates as mm-dd-yyyy to numeric fishery years}
 \usage{
-adfgConvert_DateMMDDYYYYtoFisheryYear(v)
+adfgConvert_DateMMDDYYYYtoFisheryYear(x)
 }
 \arguments{
-\item{v}{- vector of dates as mm-dd-yyyy strings}
+\item{x}{- vector of dates as mm-dd-yyyy strings}
 }
 \value{
 numeric vector of fishery years (e.g., 1990 represents 1990/91)

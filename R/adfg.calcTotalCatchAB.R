@@ -22,13 +22,15 @@
 #'
 #' @details Uses \code{sqldf::sqldf}. Units for 'weight' are kg, for 'abundance' are thousands, and for 'biomass' are t.
 #'
+#' @importFrom sqldf sqldf
+#'
 #' @export
 #'
 adfg.calcTotalCatchAB<-function(tblMPD,
                                 tblObsEff,
                                 tblTotEff){
   #assign maturity based on sex and other classifications
-  maturity<-adfg.ConvertMaturityCodes(tblMPD$sex);
+  maturity<-adfg.Convert_MaturityCodes(tblMPD$sex);
   tblMPD$maturity<-maturity;
 
   #calculate individual weights based on size
