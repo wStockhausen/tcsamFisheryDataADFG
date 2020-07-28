@@ -419,7 +419,4 @@ adfgWrite_TCSAMInputFile<-function(fishery=NULL,
       rm(tmp,uYs);
     } #-writeEff
 
-    if (con!="") close(con);
-    rm(con);
-
 }
