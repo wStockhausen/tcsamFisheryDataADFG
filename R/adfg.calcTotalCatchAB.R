@@ -22,6 +22,9 @@
 #'
 #' @details Uses \code{sqldf::sqldf}. Units for 'weight' are kg, for 'abundance' are thousands, and for 'biomass' are t.
 #'
+#' @note Output from this function should be used as a check on abundance/biomass values
+#' provided by ADFG (obtained from \code{adfg.Read_TotalCatchABs}).
+#'
 #' @importFrom sqldf sqldf
 #'
 #' @export

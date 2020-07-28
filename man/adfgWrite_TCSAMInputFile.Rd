@@ -2,7 +2,7 @@
 % Please edit documentation in R/adfgWrite_TCSAMInputFile.R
 \name{adfgWrite_TCSAMInputFile}
 \alias{adfgWrite_TCSAMInputFile}
-\title{Write ADFG data fo a TCSAM input file}
+\title{Write ADFG data to a TCSAM input file}
 \usage{
 adfgWrite_TCSAMInputFile(
   fishery = NULL,
@@ -21,10 +21,14 @@ adfgWrite_TCSAMInputFile(
   cvRC = 0.05,
   minErrRCa = 100,
   minErrRCb = 100,
+  wgtRCa = 0,
+  wgtRCb = 20,
   likeTC = "NORM2",
   cvTC = 0.2,
   minErrTCa = 2000,
   minErrTCb = 2000,
+  wgtTCa = 0,
+  wgtTCb = 20,
   unitsBiomass = "THOUSANDS_MT"
 )
 }
@@ -61,6 +65,10 @@ adfgWrite_TCSAMInputFile(
 
 \item{minErrRCb}{- min error in retained catch biomass   (default=100 kg)}
 
+\item{wgtRCa}{- likelihood multiplier for retained catch abundance}
+
+\item{wgtRCb}{- likelihood multiplier for retained catch biomass}
+
 \item{likeTC}{- likelihood type for total catch ABs ("NORM2","NORMAL", or "LOGNORMAL")}
 
 \item{cvTC}{- cv for total catch above min error (default=0.20)}
@@ -68,6 +76,10 @@ adfgWrite_TCSAMInputFile(
 \item{minErrTCa}{- min error in total catch abundance (default=2000)}
 
 \item{minErrTCb}{- min error in total catch biomass   (default=2000 kg)}
+
+\item{wgtTCa}{- likelihood multiplier for total catch abundance}
+
+\item{wgtTCb}{- likelihood multiplier for total catch biomass}
 
 \item{unitsBiomass}{- units for output biomass ("THOUSANDS_MT" [default],"MILLIONS_LBS","KG")}
 }

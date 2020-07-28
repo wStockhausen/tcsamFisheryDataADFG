@@ -1,5 +1,5 @@
 #'
-#' @title Write ADFG data fo a TCSAM input file
+#' @title Write ADFG data to a TCSAM input file
 #'
 #' @description Function to write ADFG data to a TCSAM input file.
 #'
@@ -19,10 +19,14 @@
 #' @param cvRC - cv for retained catch above min error (default=0.05)
 #' @param minErrRCa - min error in retained catch abundance (default=100)
 #' @param minErrRCb - min error in retained catch biomass   (default=100 kg)
+#' @param wgtRCa - likelihood multiplier for retained catch abundance
+#' @param wgtRCb - likelihood multiplier for retained catch biomass
 #' @param likeTC - likelihood type for total catch ABs ("NORM2","NORMAL", or "LOGNORMAL")
 #' @param cvTC - cv for total catch above min error (default=0.20)
 #' @param minErrTCa - min error in total catch abundance (default=2000)
 #' @param minErrTCb - min error in total catch biomass   (default=2000 kg)
+#' @param wgtTCa - likelihood multiplier for total catch abundance
+#' @param wgtTCb - likelihood multiplier for total catch biomass
 #' @param unitsBiomass - units for output biomass ("THOUSANDS_MT" [default],"MILLIONS_LBS","KG")
 #'
 #' @return null
@@ -47,10 +51,14 @@ adfgWrite_TCSAMInputFile<-function(fishery=NULL,
                                    cvRC=0.05,
                                    minErrRCa=100,
                                    minErrRCb=100,
+                                   wgtRCa=0,
+                                   wgtRCb=20,
                                    likeTC="NORM2",
                                    cvTC=0.20,
                                    minErrTCa=2000,
                                    minErrTCb=2000,
+                                   wgtTCa=0,
+                                   wgtTCb=20,
                                    unitsBiomass="THOUSANDS_MT"){
 
   #--SCALE CONSTANTS
@@ -108,6 +116,7 @@ adfgWrite_TCSAMInputFile<-function(fishery=NULL,
       if (!res) stop(paste0("Could not create file '",fn,"'.\nAborting...\n"));
     }
     con<-file(fn,open="w");
+    on.exit(close(con));
   }
 
     cat("#---------------------------------------------------------------------------------------\n",file=con);
@@ -144,7 +153,7 @@ adfgWrite_TCSAMInputFile<-function(fishery=NULL,
         cat("AGGREGATE_ABUNDANCE     #required keyword\n",file=con);
         cat("BY_X                    #objective function fitting option\n",file=con);
         cat(likeRC,"                 #likelihood type\n",file=con);
-        cat("0.0                     #likelihood weight\n",file=con);
+        cat(wgtRCa,"                 #likelihood weight\n",file=con);
         cat(length(uYs),"            #number of years\n",file=con,sep='');
         cat("ONES                    #units, catch abundance\n",file=con);
         cat(nrow(uFCs),"             #number of factor combinations\n",file=con);
@@ -179,8 +188,7 @@ adfgWrite_TCSAMInputFile<-function(fishery=NULL,
         cat("AGGREGATE_BIOMASS       #required keyword\n",file=con);
         cat("BY_X                    #objective function fitting option\n",file=con);
         cat(likeRC,"                 #likelihood type\n",file=con);
-        wgt<-1; if (likeRC=="NORM2") wgt<-20.0;;
-        cat(wgt,"                    #likelihood weight\n",file=con);
+        cat(wgtRCb,"                    #likelihood weight\n",file=con);
         cat(length(uYs),"                      #number of years\n",file=con,sep='');
         cat(unitsBiomass,"            # units, catch biomass\n",file=con);
         cat(nrow(uFCs),"		#number of factor combinations\n",file=con);
@@ -280,7 +288,7 @@ adfgWrite_TCSAMInputFile<-function(fishery=NULL,
         cat("AGGREGATE_ABUNDANCE     #required keyword\n",file=con);
         cat("BY_X                    #objective function fitting option\n",file=con);
         cat(likeTC,"                 #likelihood type\n",file=con);
-        cat("0.0                     #likelihood weight\n",file=con);
+        cat(wgtTCa,"                 #likelihood weight\n",file=con);
         cat(length(uYs),"            #number of years\n",file=con,sep='');
         cat("MILLIONS   		         #units, catch abundance\n",file=con);
         cat(nrow(uFCs),"             #number of factor combinations\n",file=con);
@@ -315,8 +323,7 @@ adfgWrite_TCSAMInputFile<-function(fishery=NULL,
         cat("AGGREGATE_BIOMASS       #required keyword\n",file=con);
         cat("BY_X                    #objective function fitting option\n",file=con);
         cat(likeTC,"                 #likelihood type\n",file=con);
-        wgt<-1; if (likeRC=="NORM2") wgt<-20.0;;
-        cat(wgt,"                    #likelihood weight\n",file=con);
+        cat(wgtTCb,"                 #likelihood weight\n",file=con);
         cat(length(uYs),"            #number of years\n",file=con,sep='');
         cat(unitsBiomass,"           #units, catch biomass\n",file=con);
         cat(nrow(uFCs),"		         #number of factor combinations\n",file=con);

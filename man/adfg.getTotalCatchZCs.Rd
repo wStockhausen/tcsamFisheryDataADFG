@@ -27,5 +27,6 @@ a tibble with columns
 Function to get annual total catch size compositions by crab fishery from a csv file.
 }
 \details{
+The input csv file should be one provided by ADFG.
 Uses \code{readr::read_csv} and \code{stringr::str_sub}.
 }

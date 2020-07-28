@@ -12,18 +12,26 @@ adfgRead_TotalCatchABs(csv, skip = 5)
 \item{skip}{- number of lines to skip (default=5)}
 }
 \value{
-a tibble with columns
-* fishery
-* area
-* year
-* sex
-* shell condition
-* abundance
-* biomass (kg)
+a tibble with columns \cr
+\itemize{
+  \item{fishery}
+  \item{area}
+  \item{year}
+  \item{sex}
+  \item{maturity}
+  \item{`shell condition`}
+  \item{abundance - in numbers of crab}
+  \item{`biomass (kg)` - in kg}
+}
 }
 \description{
 Function to get annual total catch abundance and biomass by crab fishery from a csv file.
 }
 \details{
 Uses \code{readr::read_csv}, \code{stringr::str_sub}, and \code{sqldf::sqldf}.
+}
+\note{
+The input csv should be the exported "item4a" worksheet from the Excel spreadsheet provided annually by ADFG
+for Tanner crab. These are the "official" estimates of total catch abundance and biomass
+of Tanner crab in the crab fisheries.
 }

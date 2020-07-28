@@ -6,16 +6,27 @@
 #' @param csv - the csv file name
 #' @param skip - number of lines to skip (default=5)
 #'
-#' @return a tibble with columns
-#' * fishery
-#' * area
-#' * year
-#' * sex
-#' * shell condition
-#' * abundance
-#' * biomass (kg)
+#' @return a tibble with columns \cr
+#' \itemize{
+#'   \item{fishery}
+#'   \item{area}
+#'   \item{year}
+#'   \item{sex}
+#'   \item{maturity}
+#'   \item{`shell condition`}
+#'   \item{abundance - in numbers of crab}
+#'   \item{`biomass (kg)` - in kg}
+#' }
 #'
 #' @details Uses \code{readr::read_csv}, \code{stringr::str_sub}, and \code{sqldf::sqldf}.
+#'
+#' @note The input csv should be the exported "item4a" worksheet from the Excel spreadsheet provided annually by ADFG
+#' for Tanner crab. These are the "official" estimates of total catch abundance and biomass
+#' of Tanner crab in the crab fisheries.
+#'
+#' @importFrom readr read_csv
+#' @importFrom sqldf sqldf
+#' @importFrom stringr str_sub
 #'
 #' @export
 #'
