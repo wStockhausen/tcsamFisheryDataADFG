@@ -12,12 +12,15 @@
 #'
 #' @details Uses functions \code{readr::read_csv}, \code{stringr::str_sub}.
 #'
+#' @importFrom readr read_csv
+#' @importFrom stringr str_sub
+#'
 #' @export
 #'
 adfgRead_MPD<-function(csv="crab_dump-931-v17.csv",
                        date_format="yyyy-mm-dd"){
   #--read measure pot data file
-  dfr <- readr::read_csv(csv);
+  dfr <- readr::read_csv(csv,guess_max=1000000);
   #column names should be:
   expCols<-c("fishery","trip","adfg","sampdate","spn","statarea",
              "mi_lon","mi_lat","spcode","sex","size","legal",
