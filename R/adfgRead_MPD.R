@@ -28,9 +28,13 @@ adfgRead_MPD<-function(csv="crab_dump-931-v17.csv",
   #check column names
   if (any(names(dfr)!=expCols)){
     idx<-names(dfr)!=expCols;
-    str<-paste0("--Error! Input column names \n\t",  paste(names(dfr)[idx],collapse=", "),
-                "\nshould match \n\t",               paste(expCols[idx],   collapse=", "));
-    stop(str);
+    str<-paste0("Input column names \n\t",  paste(names(dfr)[idx],collapse=", "),
+                "\nshould match \n\t",      paste(expCols[idx],   collapse=", "));
+    if (any(!is.na(expCols[idx]))) {
+      stop(str);
+    } else {
+      warning(str,immediate.=TRUE);#--will continue without extra (unmatched) columns
+    }
   }
 
 
@@ -62,6 +66,9 @@ adfgRead_MPD<-function(csv="crab_dump-931-v17.csv",
 
   #convert clutch condition codes to labels
   #clutchcon (clutch condition)
+
+  #convert maturity codes
+  # maturity:
 
   #--assign E/W 166W area based on middle longitude of pot string
   dfr$EWbyLon <- ifelse(-166<dfr$mi_lon,"East 166W","West 166W");
