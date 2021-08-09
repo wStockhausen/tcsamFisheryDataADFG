@@ -8,87 +8,46 @@ adfgWrite_TCSAMInputFile(
   fishery = NULL,
   fn = "Data.Fishery.ADFG.inp",
   closed = NULL,
-  dfrRC_ABs = NULL,
-  dfrRC_ZCs = NULL,
-  dfrRC_SSs = NULL,
-  dfrTC_ABs = NULL,
-  dfrTC_ZCs = NULL,
-  dfrTC_SSs = NULL,
-  dfrEffort = NULL,
-  rcCutPts = NULL,
-  tcCutPts = NULL,
-  likeRC = "NORM2",
-  cvRC = 0.05,
-  minErrRCa = 100,
-  minErrRCb = 100,
-  wgtRCa = 0,
-  wgtRCb = 20,
-  likeTC = "NORM2",
-  cvTC = 0.2,
-  minErrTCa = 2000,
-  minErrTCb = 2000,
-  wgtTCa = 0,
-  wgtTCb = 20,
-  unitsBiomass = "THOUSANDS_MT"
+  lstRC = NULL,
+  lstTC = NULL,
+  lstEff = NULL
 )
 }
 \arguments{
 \item{fishery}{- TCSAM fishery name}
 
-\item{fn}{- output file name}
+\item{fn}{- output file name  (writes to stdout if NULL or empty)}
 
 \item{closed}{- vector of years when fishery was closed}
 
-\item{dfrRC_ABs}{- dataframe with retained catch abundance/biomass data}
+\item{lstRC}{- input list with retained catch abundance/biomass/size comps information (see Details)}
 
-\item{dfrRC_ZCs}{- dataframe with retained catch size composition data}
+\item{lstTC}{- input list with total catch abundance/biomass/size comps information (see Details)}
 
-\item{dfrRC_SSs}{- dataframe with retained catch sample size information}
-
-\item{dfrTC_ABs}{- dataframe with total catch abundance/biomass data}
-
-\item{dfrTC_ZCs}{- dataframe with total catch size composition data}
-
-\item{dfrTC_SSs}{- dataframe with total catch sample size information}
-
-\item{dfrEffort}{- dataframe with fishery effort}
-
-\item{rcCutPts}{- vector with cutpts used for retained catch size comps}
-
-\item{tcCutPts}{- vector with cutpts used for total catch size comps}
-
-\item{likeRC}{- likelihood type for retained catch ABs ("NORM2","NORMAL", or "LOGNORMAL")}
-
-\item{cvRC}{- cv for retained catch above min error (default=0.05)}
-
-\item{minErrRCa}{- min error in retained catch abundance (default=100)}
-
-\item{minErrRCb}{- min error in retained catch biomass   (default=100 kg)}
-
-\item{wgtRCa}{- likelihood multiplier for retained catch abundance}
-
-\item{wgtRCb}{- likelihood multiplier for retained catch biomass}
-
-\item{likeTC}{- likelihood type for total catch ABs ("NORM2","NORMAL", or "LOGNORMAL")}
-
-\item{cvTC}{- cv for total catch above min error (default=0.20)}
-
-\item{minErrTCa}{- min error in total catch abundance (default=2000)}
-
-\item{minErrTCb}{- min error in total catch biomass   (default=2000 kg)}
-
-\item{wgtTCa}{- likelihood multiplier for total catch abundance}
-
-\item{wgtTCb}{- likelihood multiplier for total catch biomass}
-
-\item{unitsBiomass}{- units for output biomass ("THOUSANDS_MT" [default],"MILLIONS_LBS","KG")}
+\item{lstEff}{- input list with effort data information (see Details)}
 }
 \value{
-null
+Nothing.
 }
 \description{
 Function to write ADFG data to a TCSAM input file.
 }
 \details{
-None
+Calls [tcsamFunctions::writeInputFile_FleetData()] with \code{type}="FISHERY" and lstIC and lstDC set to NULL.
+
+If not NULL, input \code{lstRC} should be a list for retained catch data with elements
+\itemize{
+  \item{lstAbd - NULL, or list as returned by [tcsamFunctions::inputList_AggregateCatchData()] with type "ABUNDANCE"}
+  \item{lstBio - NULL, or list as returned by [tcsamFunctions::inputList_AggregateCatchData()] with type "BIOMASS"}
+  \item{lstZCs - NULL, or list as returned by [tcsamFunctions::inputList_SizeCompsData()]}
+}
+
+If not NULL, input \code{lstTC} should be a list for total catch data with elements
+\itemize{
+  \item{lstAbd - NULL, or list as returned by [tcsamFunctions::inputList_AggregateCatchData()] with type "ABUNDANCE"}
+  \item{lstBio - NULL, or list as returned by [tcsamFunctions::inputList_AggregateCatchData()] with type "BIOMASS"}
+  \item{lstZCs - NULL, or list as returned by [tcsamFunctions::inputList_SizeCompsData()]}
+}
+
+If not NULL, input \code{lstEff} should be a list for effort data as returned by [tcsamFunctions::inputList_EffortData()].
 }

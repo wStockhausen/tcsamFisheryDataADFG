@@ -12,6 +12,13 @@
 #'
 #' @details Uses functions \code{readr::read_csv}, \code{stringr::str_sub}.
 #'
+#' @note The 'year' values are 'crab year' based on the sample date. The 'code_year' is the
+#' ADFG fishery year based on the fishery code. Prior to rationalization, there may be differences
+#' in these two values.
+#'
+#' @note 'count' is the number of measured crab associated with the rest of the row categories.
+#' Unlike the dockside data, this  is 1 for all rows (i.e., one row for each measured crab).
+#'
 #' @importFrom readr read_csv
 #' @importFrom stringr str_sub
 #'
@@ -76,27 +83,25 @@ adfgRead_MPD<-function(csv="crab_dump-931-v17.csv",
   #--assign E/W 166W area based on statarea code (XXYYYY, where XX indicates lon of eastern edge of ADFG stat area)
   dfr$EWbySA  <- ifelse(as.numeric(stringr::str_sub(as.character(dfr$statarea),1,2))>=66,"West 166W","East 166W");
 
-  #determine fishery year corresponding to sample date
-  if (date_format=="yyyy-mm-dd"){
-    dfr$year<-adfgConvert_DateYYYYMMDDtoFisheryYear(dfr$sampdate);
-  } else if (date_format=="mm-dd-yyyy"){
-      dfr$year<-adfgConvert_DateMMDDYYYYtoFisheryYear(dfr$sampdate);
-  } else {
-    stop("#--ERROR!\n\tUnrecognized date format in adfg.getMPD(...).\n")
-  }
-
   #--parse 4-character fishery codes
   dfr.pf<-adfgConvert_FisheryCodes(dfr$fishery);
 
   #combine columns and drop "fishery" column
   dfrp <- cbind(dfr,dfr.pf)
   dfrp <- dfrp[,2:ncol(dfrp)];
-  #View(wtsUtilities::sortBy(unique(dfrp[,c("year","fishery","area","EWbyLon","EWbySA")]),factors=c("year","fishery","area","EWbyLon")));
-  dfrp$count <- 1;
+  dfrp$count <- 1;#--add 'count': each row represents an observation on 1 crab
+  #--determine crab year corresponding to sample date
+  if (date_format=="yyyy-mm-dd"){
+    dfrp$year<-adfgConvert_DateYYYYMMDDtoFisheryYear(dfrp$sampdate);
+  } else if (date_format=="mm-dd-yyyy"){
+    dfrp$year<-adfgConvert_DateMMDDYYYYtoFisheryYear(dfrp$sampdate);
+  } else {
+    stop("#--ERROR!\n\tUnrecognized date format in adfgRead_DSD(...).\n")
+  }
   #names(dfrp)
   # [1] "trip"         "adfg"         "sampdate"     "spn"          "statarea"     "mi_lon"       "mi_lat"       "spcode"
   # [9] "sex"          "size"         "legal"        "shell"        "clutch"       "eggdev"       "clutchcon"    "EWbyLon"
-  #[17] "EWbySA"       "fishery_code" "fishery"      "area"         "year"        "count"
+  #[17] "EWbySA"       "fishery_code" "fishery"      "area"         "year_code"        "count"    "year"
   cols <- c("fishery","area","EWbySA","EWbyLon","year","fishery_code","code_year","trip","adfg","sampdate","spn","statarea","mi_lon","mi_lat",
             "spcode","sex","shell","size","legal","count");
   dfrp <- dfrp[,cols];

@@ -24,7 +24,7 @@ adfg.calcTotalCatchZCs(
 \arguments{
 \item{tblTotAB}{- dataframe with total catch abundance and biomass by fishery, area, year, sex, and shell condition}
 
-\item{tblTotZCsRaw}{-  data.frame from call to function \code{adfg.ReadMPD}}
+\item{tblTotZCsRaw}{-  data.frame from call to function [adfgRead_MPD()]}
 
 \item{cutpts}{- cutpts for bins}
 

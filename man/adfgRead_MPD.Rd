@@ -22,3 +22,11 @@ Function to extract measure pot data as a tibble from a csv file.
 \details{
 Uses functions \code{readr::read_csv}, \code{stringr::str_sub}.
 }
+\note{
+The 'year' values are 'crab year' based on the sample date. The 'code_year' is the
+ADFG fishery year based on the fishery code. Prior to rationalization, there may be differences
+in these two values.
+
+'count' is the number of measured crab associated with the rest of the row categories.
+Unlike the dockside data, this  is 1 for all rows (i.e., one row for each measured crab).
+}

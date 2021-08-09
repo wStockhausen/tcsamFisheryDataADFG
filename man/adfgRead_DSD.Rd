@@ -12,12 +12,20 @@ adfgRead_DSD(csv = "TANNER-1990-2018_dockside.csv", date_format = "yyyy-mm-dd")
 \item{date_format}{- string ("yyyy-mm-dd" or "mm-dd-yyyy") indicating date format}
 }
 \value{
-a tibble with columns named "fishery","fishery_code","area","year","adfg","sampdate",
-           "spcode","sex","maturity","shell","size","legal","numcrab"
+a tibble with columns named "fishery","area","year","fishery_code","code_year","adfg","sampdate",
+           "sex","maturity","shell","size","legal", and "count".
 }
 \description{
 Function to extract dockside data as a tibble from a csv file.
 }
 \details{
 Uses functions \code{readr::read_csv}, \code{stringr::str_sub}.
+}
+\note{
+The 'year' values are 'crab year' based on the sample date. The 'code_year' is the
+ADFG fishery year based on the fishery code. Prior to rationalization, there may be differences
+in these two values.
+
+'count' is the number of measured crab associated with the rest of the row categories.
+Unlike the measure pot data, this may be > 1.
 }

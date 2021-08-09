@@ -12,7 +12,6 @@
 #'
 #' @export
 #'
-#--function to
 adfgConvert_DateYYYYMMDDtoFisheryYear<-function(x){
   yr<-as.numeric(substr(x,1,4));
   mn<-as.numeric(substr(x,6,7));
