@@ -7,7 +7,9 @@
 adfgConvert_ShellConditionCodes(x)
 }
 \arguments{
-\item{x}{- vector of shell condition codes to convert to character labels}
+\item{x}{\itemize{
+\item vector of shell condition codes to convert to character labels
+}}
 }
 \value{
 character vector with labels
@@ -16,6 +18,8 @@ character vector with labels
 Function to convert ADFG shell condition codes to character labels.
 }
 \details{
-* shell condition codes: -9,0,1,2,3,4,5,9
-* labels: "undetermined","new shell","new shell","new shell","old shell","old shell","old shell","new shell"
+\itemize{
+\item shell condition codes: -9,0,1,2,3,4,5,9
+\item labels: "undetermined","new shell","new shell","new shell","old shell","old shell","old shell","new shell"
+}
 }

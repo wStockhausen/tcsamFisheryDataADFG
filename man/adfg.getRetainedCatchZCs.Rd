@@ -7,21 +7,29 @@
 adfg.getRetainedCatchZCs(csv, skip = 2, progress = FALSE)
 }
 \arguments{
-\item{csv}{- the csv file name}
+\item{csv}{\itemize{
+\item the csv file name
+}}
 
-\item{skip}{- number of lines to skip (default=5)}
+\item{skip}{\itemize{
+\item number of lines to skip (default=5)
+}}
 
-\item{progress}{- flag to show progress reading csv file}
+\item{progress}{\itemize{
+\item flag to show progress reading csv file
+}}
 }
 \value{
 a tibble with columns
-* fishery
-* area
-* sex
-* shell condition
-* year
-* size
-* count
+\itemize{
+\item fishery
+\item area
+\item sex
+\item shell condition
+\item year
+\item size
+\item count
+}
 }
 \description{
 Function to get annual retained catch size compositions by crab fishery from a csv file.

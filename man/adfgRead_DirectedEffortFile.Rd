@@ -11,19 +11,25 @@ adfgRead_DirectedEffortFile(
 )
 }
 \arguments{
-\item{csv}{- the csv file name}
+\item{csv}{\itemize{
+\item the csv file name
+}}
 
-\item{skip}{- number of lines to skip (default=2)}
+\item{skip}{\itemize{
+\item number of lines to skip (default=2)
+}}
 
-\item{verbose}{- flag (T/F) to print diagnostic info}
+\item{verbose}{\itemize{
+\item flag (T/F) to print diagnostic info
+}}
 }
 \value{
 a tibble with columns
 \itemize{
-  \item{fishery - canonical fishery name}
-  \item{area - fishery area}
-  \item{year - crab year}
-  \item{effort - number of potlifts}
+\item{fishery - canonical fishery name}
+\item{area - fishery area}
+\item{year - crab year}
+\item{effort - number of potlifts}
 }
 }
 \description{
@@ -35,10 +41,10 @@ Uses \code{readr::read_csv}, \code{stringr::str_sub}, \code{dplyr::mutate},
 
 The input csv file should have columns
 \itemize{
-  \item{fishery year in crab year format (i.e., YYYY/YY)}
-  \item{area - "E","W", or "all EBS"}
-  \item{Directed Tanner - effort (number of pots fished)}
-  \item{Directed Snow   - effort (number of pots fished)}
-  \item{Directed BBRKC  - effort (number of pots fished)}
+\item{fishery year in crab year format (i.e., YYYY/YY)}
+\item{area - "E","W", or "all EBS"}
+\item{Directed Tanner - effort (number of pots fished)}
+\item{Directed Snow   - effort (number of pots fished)}
+\item{Directed BBRKC  - effort (number of pots fished)}
 }
 }

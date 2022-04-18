@@ -14,17 +14,29 @@ adfgWrite_TCSAMInputFile(
 )
 }
 \arguments{
-\item{fishery}{- TCSAM fishery name}
+\item{fishery}{\itemize{
+\item TCSAM fishery name
+}}
 
-\item{fn}{- output file name  (writes to stdout if NULL or empty)}
+\item{fn}{\itemize{
+\item output file name  (writes to stdout if NULL or empty)
+}}
 
-\item{closed}{- vector of years when fishery was closed}
+\item{closed}{\itemize{
+\item vector of years when fishery was closed
+}}
 
-\item{lstRC}{- input list with retained catch abundance/biomass/size comps information (see Details)}
+\item{lstRC}{\itemize{
+\item input list with retained catch abundance/biomass/size comps information (see Details)
+}}
 
-\item{lstTC}{- input list with total catch abundance/biomass/size comps information (see Details)}
+\item{lstTC}{\itemize{
+\item input list with total catch abundance/biomass/size comps information (see Details)
+}}
 
-\item{lstEff}{- input list with effort data information (see Details)}
+\item{lstEff}{\itemize{
+\item input list with effort data information (see Details)
+}}
 }
 \value{
 Nothing.
@@ -33,21 +45,21 @@ Nothing.
 Function to write ADFG data to a TCSAM input file.
 }
 \details{
-Calls [tcsamFunctions::writeInputFile_FleetData()] with \code{type}="FISHERY" and lstIC and lstDC set to NULL.
+Calls \code{\link[tcsamFunctions:writeInputFile_FleetData]{tcsamFunctions::writeInputFile_FleetData()}} with \code{type}="FISHERY" and lstIC and lstDC set to NULL.
 
 If not NULL, input \code{lstRC} should be a list for retained catch data with elements
 \itemize{
-  \item{lstAbd - NULL, or list as returned by [tcsamFunctions::inputList_AggregateCatchData()] with type "ABUNDANCE"}
-  \item{lstBio - NULL, or list as returned by [tcsamFunctions::inputList_AggregateCatchData()] with type "BIOMASS"}
-  \item{lstZCs - NULL, or list as returned by [tcsamFunctions::inputList_SizeCompsData()]}
+\item{lstAbd - NULL, or list as returned by \code{\link[tcsamFunctions:inputList_AggregateCatchData]{tcsamFunctions::inputList_AggregateCatchData()}} with type "ABUNDANCE"}
+\item{lstBio - NULL, or list as returned by \code{\link[tcsamFunctions:inputList_AggregateCatchData]{tcsamFunctions::inputList_AggregateCatchData()}} with type "BIOMASS"}
+\item{lstZCs - NULL, or list as returned by \code{\link[tcsamFunctions:inputList_SizeCompsData]{tcsamFunctions::inputList_SizeCompsData()}}}
 }
 
 If not NULL, input \code{lstTC} should be a list for total catch data with elements
 \itemize{
-  \item{lstAbd - NULL, or list as returned by [tcsamFunctions::inputList_AggregateCatchData()] with type "ABUNDANCE"}
-  \item{lstBio - NULL, or list as returned by [tcsamFunctions::inputList_AggregateCatchData()] with type "BIOMASS"}
-  \item{lstZCs - NULL, or list as returned by [tcsamFunctions::inputList_SizeCompsData()]}
+\item{lstAbd - NULL, or list as returned by \code{\link[tcsamFunctions:inputList_AggregateCatchData]{tcsamFunctions::inputList_AggregateCatchData()}} with type "ABUNDANCE"}
+\item{lstBio - NULL, or list as returned by \code{\link[tcsamFunctions:inputList_AggregateCatchData]{tcsamFunctions::inputList_AggregateCatchData()}} with type "BIOMASS"}
+\item{lstZCs - NULL, or list as returned by \code{\link[tcsamFunctions:inputList_SizeCompsData]{tcsamFunctions::inputList_SizeCompsData()}}}
 }
 
-If not NULL, input \code{lstEff} should be a list for effort data as returned by [tcsamFunctions::inputList_EffortData()].
+If not NULL, input \code{lstEff} should be a list for effort data as returned by \code{\link[tcsamFunctions:inputList_EffortData]{tcsamFunctions::inputList_EffortData()}}.
 }

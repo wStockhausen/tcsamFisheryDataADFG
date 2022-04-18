@@ -19,40 +19,64 @@ adfg.ScaleAndRebinZCs(
 )
 }
 \arguments{
-\item{mdfrScl}{- dataframe with scaling information}
+\item{mdfrScl}{\itemize{
+\item dataframe with scaling information
+}}
 
-\item{mdfrZCs}{- "raw" size compositions (counts) to scale and rebin}
+\item{mdfrZCs}{\itemize{
+\item "raw" size compositions (counts) to scale and rebin
+}}
 
-\item{aggFacs}{- character vector of biological factors over which to aggregate (e.g., shell condition)}
+\item{aggFacs}{\itemize{
+\item character vector of biological factors over which to aggregate (e.g., shell condition)
+}}
 
-\item{scaleCol}{- name of column in mdfrScl with scale information}
+\item{scaleCol}{\itemize{
+\item name of column in mdfrScl with scale information
+}}
 
-\item{sizeCol}{- name of column in mdfrZCs with sizes to rebin}
+\item{sizeCol}{\itemize{
+\item name of column in mdfrZCs with sizes to rebin
+}}
 
-\item{valCol}{-  name of column in mdfrZCs with values to scale}
+\item{valCol}{\itemize{
+\item name of column in mdfrZCs with values to scale
+}}
 
-\item{cutpts}{- vector of cutpoints}
+\item{cutpts}{\itemize{
+\item vector of cutpoints
+}}
 
-\item{truncate.low}{- flag to truncate below first cutpoint (i.e., cutpt[1]<-0)}
+\item{truncate.low}{\itemize{
+\item flag to truncate below first cutpoint (i.e., cutpt\link{1}<-0)
+}}
 
-\item{truncate.high}{- flag to truncate above last cutpoint (i.e., cutpt[last]<-Inf)}
+\item{truncate.high}{\itemize{
+\item flag to truncate above last cutpoint (i.e., cutpt\link{last}<-Inf)
+}}
 
-\item{returnSampleSizes}{- flag to return sample sizes as well as size compositions (default=FALSE)}
+\item{returnSampleSizes}{\itemize{
+\item flag to return sample sizes as well as size compositions (default=FALSE)
+}}
 
-\item{verbose}{- flag (T/F) to print diagnostic information}
+\item{verbose}{\itemize{
+\item flag (T/F) to print diagnostic information
+}}
 }
 \value{
 If returnSampleSizes is FALSE, a dataframe with same columns as mdfrZCs, except that the \code{valCol}
 column is renamed to that in \code{scaleCol}.
 
 If returnSampleSizes is TRUE, then the return value is a list with named elements
-* tblSS -a dataframe with sample sizes
-* tblZCs - the scaled, rebinned and expanded size compositions
+\itemize{
+\item tblSS -a dataframe with sample sizes
+\item tblZCs - the scaled, rebinned and expanded size compositions
+}
 }
 \description{
 Function to scale and rebin size compositions.
 }
 \details{
 Uses \code{sqldf::sqldf}, \code{reshape2::dcast}, \code{wtsUtilities::Sum}, and \code{wtsUtilities::applyCutPts}.
-Input column names should given "as is" and **NOT** be backquoted.
+Input column names should given "as is" and \strong{NOT} be backquoted.
 }

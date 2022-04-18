@@ -7,18 +7,22 @@
 adfg.ExtractRawZCsFromMPD(mpd)
 }
 \arguments{
-\item{mpd}{- dataframe from call to \code{adfg.getMPD}}
+\item{mpd}{\itemize{
+\item dataframe from call to \code{adfg.getMPD}
+}}
 }
 \value{
 a tibble with columns
-* fishery
-* area
-* sex
-* maturity
-* shell condition
-* year
-* size
-* count
+\itemize{
+\item fishery
+\item area
+\item sex
+\item maturity
+\item shell condition
+\item year
+\item size
+\item count
+}
 }
 \description{
 Function to get annual total catch size compositions by crab fishery from a csv file.

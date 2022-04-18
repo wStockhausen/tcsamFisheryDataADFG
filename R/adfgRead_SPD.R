@@ -1,10 +1,11 @@
 #'
-#' @title Extract measure pot data (MPD) as a tibble from a csv file
+#' @title Extract summary pot data (SPD) as a tibble from a csv file
 #'
-#' @description Function to extract measure pot data (MPD) as a tibble from a csv file.
+#' @description Function to extract summary pot data (SPD) as a tibble from a csv file.
 #'
-#' @param csv - csv filename with measure pot data
+#' @param csv - csv filename with summary pot data
 #' @param date_format - string ("yyyy-mm-dd" or "mm-dd-yyyy") indicating date format
+#' @param col_types - passed to readr::read_csv, specifies column types (dedfault="ccccccddddddddcc")
 #'
 #' @return a tibble with columns "fishery","area","EWbySA","EWbyLon","year","fishery_code",
 #' "code_year","trip","adfg","sampdate","spn","statarea","mi_lon","mi_lat",
@@ -16,22 +17,22 @@
 #' ADFG fishery year based on the fishery code. Prior to rationalization, there may be differences
 #' in these two values.
 #'
-#' @note 'count' is the number of measured crab associated with the rest of the row categories.
-#' Unlike the dockside data, this  is 1 for all rows (i.e., one row for each measured crab).
+#' @note 'count' is the number of crab associated with the rest of the row categories.
 #'
 #' @importFrom readr read_csv
 #' @importFrom stringr str_sub
 #'
 #' @export
 #'
-adfgRead_MPD<-function(csv="crab_dump-931-v17.csv",
-                       date_format="yyyy-mm-dd"){
-  #--read measure pot data file
-  dfr <- readr::read_csv(csv,guess_max=1000000);
+adfgRead_SPD<-function(csv="TANNER-1990-2020_potsum.csv",
+                       date_format="mm-dd-yyyy",
+                       col_types="ccccccddddddddcc"){
+  #--read summary pot data file
+  dfr  = readr::read_csv(csv,col_types=col_types);
   #column names should be:
   expCols<-c("fishery","trip","adfg","sampdate","spn","statarea",
-             "mi_lon","mi_lat","spcode","sex","size","legal",
-             "shell","clutch","eggdev","clutchcon");
+             "latitude", "longitude", "female", "sublegal", "legal_ret",
+             "legal_nr", "legal_ur", "tot_legal", "msr_pot", "biotwine_ok");
   #check column names
   if (any(names(dfr)!=expCols)){
     idx<-names(dfr)!=expCols;
@@ -59,26 +60,8 @@ adfgRead_MPD<-function(csv="crab_dump-931-v17.csv",
   #                     "QO" (Bering Sea snow crab) "QR" (Bering Sea red king crab) "QT" (Tanner crab West),
   #                     "TR" (BBRKC) "TT", (Tanner crab East)
 
-  #convert sex codes to labels
-  dfr$sex <- adfgConvert_SexCodes(dfr$sex);
-
-  #convert shell condition codes to labels
-  dfr$shell <- adfgConvert_ShellConditionCodes(dfr$shell);
-
-  #convert clutch fullness codes to labels
-  #clutch (clutch fullness):
-
-  #convert egg development codes to labels
-  #eggdev (egg development):
-
-  #convert clutch condition codes to labels
-  #clutchcon (clutch condition)
-
-  #convert maturity codes
-  # maturity:
-
   #--assign E/W 166W area based on middle longitude of pot string
-  dfr$EWbyLon <- ifelse(-166<dfr$mi_lon,"East 166W","West 166W");
+  dfr$EWbyLon <- ifelse(-166<dfr$longitude,"East 166W","West 166W");
 
   #--assign E/W 166W area based on statarea code (XXYYYY, where XX indicates lon of eastern edge of ADFG stat area)
   dfr$EWbySA  <- ifelse(as.numeric(stringr::str_sub(as.character(dfr$statarea),1,2))>=66,"West 166W","East 166W");
@@ -89,7 +72,6 @@ adfgRead_MPD<-function(csv="crab_dump-931-v17.csv",
   #combine columns and drop "fishery" column
   dfrp <- cbind(dfr,dfr.pf)
   dfrp <- dfrp[,2:ncol(dfrp)];
-  dfrp$count <- 1;#--add 'count': each row represents an observation on 1 crab
   #--determine crab year corresponding to sample date
   if (date_format=="yyyy-mm-dd"){
     dfrp$year<-adfgConvert_DateYYYYMMDDtoFisheryYear(dfrp$sampdate);
@@ -98,12 +80,12 @@ adfgRead_MPD<-function(csv="crab_dump-931-v17.csv",
   } else {
     stop("#--ERROR!\n\tUnrecognized date format in adfgRead_DSD(...).\n")
   }
-  #names(dfrp)
-  # [1] "trip"         "adfg"         "sampdate"     "spn"          "statarea"     "mi_lon"       "mi_lat"       "spcode"
-  # [9] "sex"          "size"         "legal"        "shell"        "clutch"       "eggdev"       "clutchcon"    "EWbyLon"
-  #[17] "EWbySA"       "fishery_code" "fishery"      "area"         "year_code"        "count"    "year"
-  cols <- c("fishery","area","EWbySA","EWbyLon","year","fishery_code","code_year","trip","adfg","sampdate","spn","statarea","mi_lon","mi_lat",
-            "spcode","sex","shell","size","legal","count");
+  #--for testing: cat(paste0('"',names(dfrp),'"',collapse=", "))
+  # "trip", "adfg", "sampdate", "spn", "statarea", "latitude", "longitude", "female", "sublegal",
+  # "legal_ret", "legal_nr", "legal_ur", "tot_legal", "msr_pot", "biotwine_ok", "EWbyLon", "EWbySA",
+  # "fishery_code", "fishery", "area", "code_year", "year"
+  cols <- c("fishery","area","EWbySA","EWbyLon","year","fishery_code","code_year","trip","adfg","sampdate","spn","statarea","longitude","latitude",
+            "female", "sublegal", "legal_ret", "legal_nr", "legal_ur", "tot_legal");
   dfrp <- dfrp[,cols];
 
   #fishery_codes to remove

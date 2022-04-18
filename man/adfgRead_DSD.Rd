@@ -7,13 +7,17 @@
 adfgRead_DSD(csv = "TANNER-1990-2018_dockside.csv", date_format = "yyyy-mm-dd")
 }
 \arguments{
-\item{csv}{- csv filename with dockside data}
+\item{csv}{\itemize{
+\item csv filename with dockside data
+}}
 
-\item{date_format}{- string ("yyyy-mm-dd" or "mm-dd-yyyy") indicating date format}
+\item{date_format}{\itemize{
+\item string ("yyyy-mm-dd" or "mm-dd-yyyy") indicating date format
+}}
 }
 \value{
 a tibble with columns named "fishery","area","year","fishery_code","code_year","adfg","sampdate",
-           "sex","maturity","shell","size","legal", and "count".
+"sex","maturity","shell","size","legal", and "count".
 }
 \description{
 Function to extract dockside data as a tibble from a csv file.

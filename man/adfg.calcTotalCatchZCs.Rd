@@ -22,36 +22,52 @@ adfg.calcTotalCatchZCs(
 )
 }
 \arguments{
-\item{tblTotAB}{- dataframe with total catch abundance and biomass by fishery, area, year, sex, and shell condition}
+\item{tblTotAB}{\itemize{
+\item dataframe with total catch abundance and biomass by fishery, area, year, sex, and shell condition
+}}
 
-\item{tblTotZCsRaw}{-  data.frame from call to function [adfgRead_MPD()]}
+\item{tblTotZCsRaw}{\itemize{
+\item data.frame from call to function \code{\link[=adfgRead_MPD]{adfgRead_MPD()}}
+}}
 
-\item{cutpts}{- cutpts for bins}
+\item{cutpts}{\itemize{
+\item cutpts for bins
+}}
 
-\item{truncate.low}{- flag to exclude crab with sizes less than minimum cutpt (default=TRUE)}
+\item{truncate.low}{\itemize{
+\item flag to exclude crab with sizes less than minimum cutpt (default=TRUE)
+}}
 
-\item{truncate.high}{- flag to exclude crab with sizes greater than maximum cutpt (default=FALSE)}
+\item{truncate.high}{\itemize{
+\item flag to exclude crab with sizes greater than maximum cutpt (default=FALSE)
+}}
 
-\item{tblRetAB}{- dataframe with total catch abundance and biomass by fishery, area, year, sex, an shell condition}
+\item{tblRetAB}{\itemize{
+\item dataframe with total catch abundance and biomass by fishery, area, year, sex, an shell condition
+}}
 }
 \value{
 a datarame with columns
-* fishery
-* area
-* sex
-* shell condition
-* year
-* size
-* abundance (in thousands of crab)
+\itemize{
+\item fishery
+\item area
+\item sex
+\item shell condition
+\item year
+\item size
+\item abundance (in thousands of crab)
+}
 
 a dataframe with columns
-* fishery
-* area
-* sex
-* shell condition
-* year
-* size
-* abundance (in thousands of crab)
+\itemize{
+\item fishery
+\item area
+\item sex
+\item shell condition
+\item year
+\item size
+\item abundance (in thousands of crab)
+}
 }
 \description{
 Function to calculate expanded annual total catch size compositions by crab fishery, area, year, sex and shell condition.

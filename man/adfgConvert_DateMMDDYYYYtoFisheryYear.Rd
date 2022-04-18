@@ -7,7 +7,9 @@
 adfgConvert_DateMMDDYYYYtoFisheryYear(x)
 }
 \arguments{
-\item{x}{- vector of dates as mm-dd-yyyy strings}
+\item{x}{\itemize{
+\item vector of dates as mm-dd-yyyy strings
+}}
 }
 \value{
 numeric vector of fishery years (e.g., 1990 represents 1990/91)

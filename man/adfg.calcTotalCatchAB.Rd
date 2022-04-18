@@ -7,25 +7,33 @@
 adfg.calcTotalCatchAB(tblMPD, tblObsEff, tblTotEff)
 }
 \arguments{
-\item{tblMPD}{- from call to \code{adfg.extractMPD}}
+\item{tblMPD}{\itemize{
+\item from call to \code{adfg.extractMPD}
+}}
 
-\item{tblObsEff}{- from call to \code{adfg.getAtSeaObserverEffort} or \code{adfg.calcAtSeaObserverEffort}}
+\item{tblObsEff}{\itemize{
+\item from call to \code{adfg.getAtSeaObserverEffort} or \code{adfg.calcAtSeaObserverEffort}
+}}
 
-\item{tblTotEff}{- from call to \code{adfg.getTotalFisheryEffort}}
+\item{tblTotEff}{\itemize{
+\item from call to \code{adfg.getTotalFisheryEffort}
+}}
 }
 \value{
 tibble with columns
- * fishery
- * area
- * year
- * potlifts - number of pots fished (total effort)
- * measure pots - number of observed pots (sample effort)
- * expFactor - expansion factor
- * sex - "male", "female", "undetermined", "hermaphrodite", or NA
- * variable - "count", "weight", "abundance", or "biomass"
- * value - value of asociated variable
- * type - "observed" or "expanded"
- * units - "ones", "thousands", "kg" or "t"
+\itemize{
+\item fishery
+\item area
+\item year
+\item potlifts - number of pots fished (total effort)
+\item measure pots - number of observed pots (sample effort)
+\item expFactor - expansion factor
+\item sex - "male", "female", "undetermined", "hermaphrodite", or NA
+\item variable - "count", "weight", "abundance", or "biomass"
+\item value - value of asociated variable
+\item type - "observed" or "expanded"
+\item units - "ones", "thousands", "kg" or "t"
+}
 }
 \description{
 Function to calculate estimated total catch abundance by expanding observed abundance.

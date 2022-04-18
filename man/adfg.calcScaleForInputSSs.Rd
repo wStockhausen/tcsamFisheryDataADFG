@@ -7,11 +7,17 @@
 adfg.calcScaleForInputSSs(dfrRC_SSs = NULL, mnYr = 1980, mxYr = 2014)
 }
 \arguments{
-\item{dfrRC_SSs}{- dataframe with retained catch sample sizes}
+\item{dfrRC_SSs}{\itemize{
+\item dataframe with retained catch sample sizes
+}}
 
-\item{mnYr}{- minimum year for averaging period (default = 1980)}
+\item{mnYr}{\itemize{
+\item minimum year for averaging period (default = 1980)
+}}
 
-\item{mxYr}{- maximum year for averaging time period (default = 2014)}
+\item{mxYr}{\itemize{
+\item maximum year for averaging time period (default = 2014)
+}}
 }
 \value{
 scale factor based on average retained crab sample sizes over the averaging period.
@@ -24,7 +30,7 @@ The scale factor is the average number of retained crab measured annually
 during dockside sampling across a given time period. The default period is used for Tanner crab.
 The scale factor \code{scale} should be used to determine input sample sizes for size composition data
 using the formula \cr
-             inp_ss = min(max_ss,max_ss*(ss/scale)) \cr
+inp_ss = min(max_ss,max_ss*(ss/scale)) \cr
 where max_ss is the maximum allowed input sample size (typically 200) and ss is the original sample size
 (the total number of crab measured)
 }

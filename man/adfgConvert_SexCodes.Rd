@@ -7,7 +7,9 @@
 adfgConvert_SexCodes(x)
 }
 \arguments{
-\item{x}{- vector of sex codes to convert to character labels}
+\item{x}{\itemize{
+\item vector of sex codes to convert to character labels
+}}
 }
 \value{
 character vector with labels
@@ -16,6 +18,8 @@ character vector with labels
 Function to convert ADFG sex codes to character labels.
 }
 \details{
-* sex codes: 1,2,3,0
-* labels: "male","female","hermaphrodite","undetermined"
+\itemize{
+\item sex codes: 1,2,3,0
+\item labels: "male","female","hermaphrodite","undetermined"
+}
 }

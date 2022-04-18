@@ -7,21 +7,25 @@
 adfgRead_TotalCatchABs(csv, skip = 5)
 }
 \arguments{
-\item{csv}{- the csv file name}
+\item{csv}{\itemize{
+\item the csv file name
+}}
 
-\item{skip}{- number of lines to skip (default=5)}
+\item{skip}{\itemize{
+\item number of lines to skip (default=5)
+}}
 }
 \value{
 a tibble with columns \cr
 \itemize{
-  \item{fishery}
-  \item{area}
-  \item{year}
-  \item{sex}
-  \item{maturity}
-  \item{`shell condition`}
-  \item{abundance - in numbers of crab}
-  \item{`biomass (kg)` - in kg}
+\item{fishery}
+\item{area}
+\item{year}
+\item{sex}
+\item{maturity}
+\item{\verb{shell condition}}
+\item{abundance - in numbers of crab}
+\item{\code{biomass (kg)} - in kg}
 }
 }
 \description{

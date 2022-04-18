@@ -18,35 +18,57 @@ adfg.ExportWideZCs(
 )
 }
 \arguments{
-\item{dfrSSs}{- dataframe with sample size information}
+\item{dfrSSs}{\itemize{
+\item dataframe with sample size information
+}}
 
-\item{dfrZCs}{- size composition dataframe}
+\item{dfrZCs}{\itemize{
+\item size composition dataframe
+}}
 
-\item{byFacs}{- character vector of size composition factors to include in ouptut}
+\item{byFacs}{\itemize{
+\item character vector of size composition factors to include in ouptut
+}}
 
-\item{sizeCol}{- name of column in dfrZCs with sizes}
+\item{sizeCol}{\itemize{
+\item name of column in dfrZCs with sizes
+}}
 
-\item{valCol}{-  name of column in dfrZCs with abundance values}
+\item{valCol}{\itemize{
+\item name of column in dfrZCs with abundance values
+}}
 
-\item{ssCol}{-  name of column in dfrSSs with sample sizes}
+\item{ssCol}{\itemize{
+\item name of column in dfrSSs with sample sizes
+}}
 
-\item{csvSSs}{- name of csv file to save sample size to}
+\item{csvSSs}{\itemize{
+\item name of csv file to save sample size to
+}}
 
-\item{csvZCs}{- name of csv file to save size compositions to}
+\item{csvZCs}{\itemize{
+\item name of csv file to save size compositions to
+}}
 
-\item{writeFiles}{- flag (T/F) to write csv files (default=TRUE)}
+\item{writeFiles}{\itemize{
+\item flag (T/F) to write csv files (default=TRUE)
+}}
 
-\item{verbose}{- flag (T/F) to print diagnostic information}
+\item{verbose}{\itemize{
+\item flag (T/F) to print diagnostic information
+}}
 }
 \value{
 A list with named elements
-* tblZCs - the wide-format size compositions
-* tblSSs - a dataframe with sample sizes
+\itemize{
+\item tblZCs - the wide-format size compositions
+\item tblSSs - a dataframe with sample sizes
+}
 }
 \description{
 Function to export size compositions in wide format.
 }
 \details{
 Uses \code{sqldf::sqldf}, \code{reshape2::dcast}, and \code{wtsUtilities::Sum}.
-Input column names should given "as is" and **NOT** be backquoted.
+Input column names should given "as is" and \strong{NOT} be backquoted.
 }

@@ -7,7 +7,9 @@
 adfgConvert_FisheryNames(x)
 }
 \arguments{
-\item{x}{- vector of ADFG fishery names to convert canonical assessment names}
+\item{x}{\itemize{
+\item vector of ADFG fishery names to convert canonical assessment names
+}}
 }
 \value{
 character vector with canonical names
@@ -16,6 +18,8 @@ character vector with canonical names
 Function to convert ADFG fishery names to canonical assessment names.
 }
 \details{
-* original names: "Tanner crab","Tanner E","Tanner W","Tanner","snow crab","snow","BBRKC","RKC"
-* final names:    "TCF",        "TCF",     "TCF",     "TCF",   "SCF",      "SCF", "RKF",  "RKF"
+\itemize{
+\item original names: "Tanner crab","Tanner E","Tanner W","Tanner","snow crab","snow","BBRKC","RKC"
+\item final names:    "TCF",        "TCF",     "TCF",     "TCF",   "SCF",      "SCF", "RKF",  "RKF"
+}
 }

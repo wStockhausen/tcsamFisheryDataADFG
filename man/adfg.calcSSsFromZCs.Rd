@@ -7,19 +7,25 @@
 adfg.calcSSsFromZCs(dfr, writeCSV = FALSE)
 }
 \arguments{
-\item{dfr}{- data.frame from call to function \code{adfg.ExtractRawZCsFromMPD}}
+\item{dfr}{\itemize{
+\item data.frame from call to function \code{adfg.ExtractRawZCsFromMPD}
+}}
 
-\item{writeCSV}{- flag (T/F) to write table to csv file}
+\item{writeCSV}{\itemize{
+\item flag (T/F) to write table to csv file
+}}
 }
 \value{
 a dataframe with columns
-* fishery
-* area
-* year
-* sex
-* maturity
-* shell condition
-* ss - sample size
+\itemize{
+\item fishery
+\item area
+\item year
+\item sex
+\item maturity
+\item shell condition
+\item ss - sample size
+}
 }
 \description{
 Function to calculate sample sizes for size compositions

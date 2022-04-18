@@ -7,7 +7,9 @@
 adfgConvert_MaturityCodes(sex)
 }
 \arguments{
-\item{sex}{- vector of sex codes (after conversion to male/female/unknown via \code{adfg.ConvertSexCodes})}
+\item{sex}{\itemize{
+\item vector of sex codes (after conversion to male/female/unknown via \code{adfg.ConvertSexCodes})
+}}
 }
 \value{
 a vector of maturity states (immature/mature/undetermined)

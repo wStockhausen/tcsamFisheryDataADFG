@@ -7,20 +7,26 @@
 adfgZCs_CalcRetZCsFromDSD(dfr, fn = NULL)
 }
 \arguments{
-\item{dfr}{- data.frame from function \code{adfgRead_DSD}}
+\item{dfr}{\itemize{
+\item data.frame from function \code{adfgRead_DSD}
+}}
 
-\item{fn}{- name of file to write csv to (or NULL not to write)}
+\item{fn}{\itemize{
+\item name of file to write csv to (or NULL not to write)
+}}
 }
 \value{
 a dataframe with columns
-* year
-* fishery
-* area
-* sex
-* maturity
-* shell condition
-* size
-* count
+\itemize{
+\item year
+\item fishery
+\item area
+\item sex
+\item maturity
+\item shell condition
+\item size
+\item count
+}
 }
 \description{
 Function to calculate retained catch size compositions from dockside data.

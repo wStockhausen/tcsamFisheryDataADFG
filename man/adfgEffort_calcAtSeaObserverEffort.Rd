@@ -7,14 +7,18 @@
 adfgEffort_calcAtSeaObserverEffort(tbl)
 }
 \arguments{
-\item{tbl}{- measure pot data table from \code{adfg.extractMPD}}
+\item{tbl}{\itemize{
+\item measure pot data table from \code{adfg.extractMPD}
+}}
 }
 \value{
 dataframe with columns
-* fishery
-* area
-* year
-* numpots
+\itemize{
+\item fishery
+\item area
+\item year
+\item numpots
+}
 }
 \description{
 Function to calculate at-sea observer sampling effort from measure pot data.

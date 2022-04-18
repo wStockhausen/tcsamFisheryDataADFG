@@ -10,17 +10,23 @@ adfg.getAtSeaObserverEffort(
 )
 }
 \arguments{
-\item{csv}{- filename to read}
+\item{csv}{\itemize{
+\item filename to read
+}}
 
-\item{skip}{- number of lines to skip (default=4)}
+\item{skip}{\itemize{
+\item number of lines to skip (default=4)
+}}
 }
 \value{
 tibble with columns:
-* fishery
-* area
-* year - fishery year
-* summary pots - number of summary pots sampled
-* measure pots - number of measure pots
+\itemize{
+\item fishery
+\item area
+\item year - fishery year
+\item summary pots - number of summary pots sampled
+\item measure pots - number of measure pots
+}
 }
 \description{
 Function to get at-sea observer effort from a csv file.

@@ -7,20 +7,26 @@
 adfgRead_RetainedCatchABs(csv, skip = 2)
 }
 \arguments{
-\item{csv}{- the csv file name}
+\item{csv}{\itemize{
+\item the csv file name
+}}
 
-\item{skip}{- number of lines to skip (default=2)}
+\item{skip}{\itemize{
+\item number of lines to skip (default=2)
+}}
 }
 \value{
 a tibble with columns
-* fishery
-* area
-* year
-* sex
-* maturity
-* shell condition
-* abundance
-* biomass (kg)
+\itemize{
+\item fishery
+\item area
+\item year
+\item sex
+\item maturity
+\item shell condition
+\item abundance
+\item biomass (kg)
+}
 }
 \description{
 Function to get annual retained catch abundance and biomass by crab fishery from a csv file.
