@@ -4,7 +4,7 @@
 \alias{adfgRead_MPD}
 \title{Extract measure pot data (MPD) as a tibble from a csv file}
 \usage{
-adfgRead_MPD(csv = "crab_dump-931-v17.csv", date_format = "yyyy-mm-dd")
+adfgRead_MPD(csv = "crab_dump.csv", date_format = "yyyy-mm-dd")
 }
 \arguments{
 \item{csv}{\itemize{
