@@ -22,28 +22,50 @@
 #' @importFrom readr read_csv
 #' @importFrom stringr str_sub
 #'
+#' @import magrittr
+#'
 #' @export
 #'
-adfgRead_MPD<-function(csv="crab_dump-931-v17.csv",
+adfgRead_MPD<-function(csv="crab_dump.csv",
                        date_format="yyyy-mm-dd"){
   #--read measure pot data file
   dfr <- readr::read_csv(csv,guess_max=1000000);
-  #column names should be:
-  expCols<-c("fishery","trip","adfg","sampdate","spn","statarea",
-             "mi_lon","mi_lat","spcode","sex","size","legal",
-             "shell","clutch","eggdev","clutchcon");
-  #check column names
-  if (any(names(dfr)!=expCols)){
-    idx<-names(dfr)!=expCols;
-    str<-paste0("Input column names \n\t",  paste(names(dfr)[idx],collapse=", "),
-                "\nshould match \n\t",      paste(expCols[idx],   collapse=", "));
-    if (any(!is.na(expCols[idx]))) {
-      stop(str);
-    } else {
-      warning(str,immediate.=TRUE);#--will continue without extra (unmatched) columns
-    }
+  #expected column names are:
+  expColNames<-c("fishery","trip","adfg","sampdate","spn","statarea",
+                 "spcode","sex","size","legal",
+                 "shell","clutch","eggdev","clutchcon");
+  expLLNames=c("latitude","longitude");
+  #--check column names and adjust expectations
+  #----check for required names
+  if (!all(expColNames %in% names(dfr))) {
+    idx = !(expColNames %in% names(dfr));
+    str<-paste0("Input column names \n\t",              paste(names(dfr),  collapse=", "),
+                "\nare missing the required names \n\t",paste(expCols[idx],collapse=", "));
+    stop(str);
+  }
+  #----check for names of latitude, longitude columns
+  llCols = NA;
+  if (all(c("mi_lat",  "mi_lon")    %in% names(dfr))) llCols = c("mi_lat",  "mi_lon");    #--nominal names
+  if (all(c("latitude","longitude") %in% names(dfr))) llCols = c("latitude","longitude"); #--alternative (new as of 2022) names
+  if (any(is.na(llCols))) {
+    str<-paste0("Could not identify lat/lon columns in input file.\n",
+                "Expected names are 'latitude' and 'longitude' or `mi_lat' and 'mi_lon'.\n",
+                "Input column names are \n\t",paste(names(dfr),  collapse=", "));
+    stop(str);
+  }
+  latCol = llCols[1];
+  lonCol = llCols[2];
+  #----check for eastwest column
+  eastwest = FALSE;
+  if (any(names(dfr)=="eastwest")) eastwest = TRUE;
+  if (!any(names(dfr %in% c(expColNames,llCols)))){
+    idx<-!(names(dfr) %in% c(expColNames,llCols,"eastwest"));
+    str<-paste0("The following unrecognized columns will be skipped \n\t",paste(names(dfr)[idx],collapse=", "));
+    warning(str,immediate.=TRUE);#--will continue without extra (unmatched) columns
   }
 
+  nr_orig = nrow(dfr);
+  message("\tnumber of input rows: ",nr_orig);
 
   #unique fishery names:
   # [1] "CK98" "CO00" "CO01" "CO02" "CO03" "CO04" "CO05" "CO98" "CO99" "CR00" "CR01" "CR02" "CR03" "CR04" "CR98" "CR99" "EI91" "EI92" "EO91" "EO92" "EO93" "QO00" "QO01"
@@ -77,18 +99,25 @@ adfgRead_MPD<-function(csv="crab_dump-931-v17.csv",
   #convert maturity codes
   # maturity:
 
-  #--assign E/W 166W area based on middle longitude of pot string
-  dfr$EWbyLon <- ifelse(-166<dfr$mi_lon,"East 166W","West 166W");
-
-  #--assign E/W 166W area based on statarea code (XXYYYY, where XX indicates lon of eastern edge of ADFG stat area)
-  dfr$EWbySA  <- ifelse(as.numeric(stringr::str_sub(as.character(dfr$statarea),1,2))>=66,"West 166W","East 166W");
+  #--extract or assign E/W 166W
+  if (eastwest) {
+    dfr$EWbyLon <- ifelse(dfr$eastwest=="E","East 166W","West 166W");
+    dfr$EWbySA  <- ifelse(dfr$eastwest=="E","East 166W","West 166W");
+  } else {
+    #--assign E/W 166W area based on middle longitude of pot string
+    dfr$EWbyLon <- ifelse(-166<dfr[[lonCol]],"East 166W","West 166W");
+    #--assign E/W 166W area based on statarea code (XXYYYY, where XX indicates lon of eastern edge of ADFG stat area)
+    dfr$EWbySA  <- ifelse(as.numeric(stringr::str_sub(as.character(dfr$statarea),1,2))>=66,"West 166W","East 166W");
+  }
 
   #--parse 4-character fishery codes
   dfr.pf<-adfgConvert_FisheryCodes(dfr$fishery);
 
-  #combine columns and drop "fishery" column
+  #combine columns, standardize lat/lon column names, and drop "fishery" column
   dfrp <- cbind(dfr,dfr.pf)
-  dfrp <- dfrp[,2:ncol(dfrp)];
+  dfrp$mi_lat = dfrp[[latCol]];
+  dfrp$mi_lon = dfrp[[lonCol]];
+  dfrp %>% dplyr::select(!tidyselect::any_of(c("fishery","latitude","longitude")));
   dfrp$count <- 1;#--add 'count': each row represents an observation on 1 crab
   #--determine crab year corresponding to sample date
   if (date_format=="yyyy-mm-dd"){
@@ -105,11 +134,15 @@ adfgRead_MPD<-function(csv="crab_dump-931-v17.csv",
   cols <- c("fishery","area","EWbySA","EWbyLon","year","fishery_code","code_year","trip","adfg","sampdate","spn","statarea","mi_lon","mi_lat",
             "spcode","sex","shell","size","legal","count");
   dfrp <- dfrp[,cols];
+  nrp_orig = nrow(dfrp);
+  message("\tnumber of dfrp rows: ",nrp_orig);
+
 
   #fishery_codes to remove
   rmv<-c("CK98",          #Pribs RKC or BKC fisheries   ( 8 crab measured)
          "QR95");         #RKC fisheries west of 166W   (10 crab measured)
   idr <- dfrp$fishery_code %in% rmv;
+  message("\tCK98 & QR95 fisheries rows dropped: ",sum(idr))
 
   #fishery_codes to keep
   keep2<-c("EI","QT","TT",         #Tanner crab fisheries
@@ -121,6 +154,8 @@ adfgRead_MPD<-function(csv="crab_dump-931-v17.csv",
           (68>as.numeric(stringr::str_sub(as.character(dfr$statarea),1,2)));#keep RKC only in BB (east of 168W)
 
   dfrp1 <- dfrp[(!idr)&(idk2|idk4),]; #select subset
+  message("\tOther rows dropped: ",sum(!(idk2|idk4)))
+  message("\tdropped ",sum(!((!idr)&(idk2|idk4)))," total rows at stage 1.")
 
   #assign area designations "all EBS", "East 166W" and "West 166W"
   dfrp1$area <- "all EBS"; #all RKC and snow crab
@@ -139,6 +174,7 @@ adfgRead_MPD<-function(csv="crab_dump-931-v17.csv",
 
   #rename fisheries to canonical forms
   dfrp1$fishery <- adfgConvert_FisheryNames(dfrp1$fishery);
+  message("\tfinal number of rows is ",nrow(dfrp1),"\n");
 
   return(dfrp1);
 }
