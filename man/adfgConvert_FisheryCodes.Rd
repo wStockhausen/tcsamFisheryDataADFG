@@ -8,21 +8,22 @@ adfgConvert_FisheryCodes(f)
 }
 \arguments{
 \item{f}{\itemize{
-\item vetor of fishery codes to parse
+\item vector of fishery codes to parse
 }}
 }
 \value{
 dataframe with columns:
 \itemize{
-\item fishery code - f
+\item fishery code - \code{f} (input vector of ADFG codes)
 \item fishery - RKC, snow crab, Tanner crab
 \item area - Bering Sea, Bristol Bay, CDQ, East, West, UNKNOWN
 \item code_year - year corresponding to fishery code (NOT! fishery year, apparently)
+\item char12 - first two characters of fishery code
 }
 }
 \description{
 Function to parse 4-character ADFG "fishery" codes.
 }
 \details{
-Uses \code{stringr::sub}, \code{wtsUtilities::substituteValues} functions.
+Uses \code{stringr::str_sub}, \code{wtsUtilities::substituteValues} functions.
 }

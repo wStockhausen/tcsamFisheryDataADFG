@@ -4,7 +4,11 @@
 \alias{adfgRead_MPD}
 \title{Extract measure pot data (MPD) as a tibble from a csv file}
 \usage{
-adfgRead_MPD(csv = "crab_dump.csv", date_format = "yyyy-mm-dd")
+adfgRead_MPD(
+  csv = "crab_dump.csv",
+  date_format = "yyyy-mm-dd",
+  returnDropped = FALSE
+)
 }
 \arguments{
 \item{csv}{\itemize{
@@ -13,6 +17,10 @@ adfgRead_MPD(csv = "crab_dump.csv", date_format = "yyyy-mm-dd")
 
 \item{date_format}{\itemize{
 \item string ("yyyy-mm-dd" or "mm-dd-yyyy") indicating date format
+}}
+
+\item{returnDropped}{\itemize{
+\item flag (T/F) to return \emph{dropped} records, not selected records
 }}
 }
 \value{
