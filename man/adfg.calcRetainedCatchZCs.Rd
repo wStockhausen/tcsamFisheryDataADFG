@@ -31,5 +31,5 @@ a datarame with columns
 Function to calculate expanded annual retained catch size compositions by crab fishery, area, year, sex and shell condition.
 }
 \details{
-Uses \code{readr::read_csv} and \code{stringr::str_sub}.
+Uses \code{\link[readr:read_delim]{readr::read_csv()}} and \code{\link[stringr:str_sub]{stringr::str_sub()}}.
 }

@@ -3,27 +3,31 @@
 #'
 #' @description Function to scale and rebin size compositions.
 #'
-#' @param mdfrScl - dataframe with scaling information
-#' @param mdfrZCs - "raw" size compositions (counts) to scale and rebin
-#' @param aggFacs - character vector of biological factors over which to aggregate (e.g., shell condition)
-#' @param scaleCol - name of column in mdfrScl with scale information
-#' @param sizeCol  - name of column in mdfrZCs with sizes to rebin
-#' @param valCol  -  name of column in mdfrZCs with values to scale
-#' @param cutpts - vector of cutpoints
-#' @param truncate.low - flag to truncate below first cutpoint (i.e., cutpt[1]<-0)
-#' @param truncate.high - flag to truncate above last cutpoint (i.e., cutpt[last]<-Inf)
-#' @param returnSampleSizes - flag to return sample sizes as well as size compositions (default=FALSE)
-#' @param verbose - flag (T/F) to print diagnostic information
+#' @param mdfrScl : dataframe with scaling information
+#' @param mdfrZCs : "raw" size compositions (counts) to scale and rebin
+#' @param aggFacs : character vector of biological factors over which to aggregate (e.g., shell condition)
+#' @param scaleCol : name of column in mdfrScl with scale information
+#' @param sizeCol  : name of column in mdfrZCs with sizes to rebin
+#' @param valCol  :  name of column in mdfrZCs with values to scale
+#' @param cutpts : vector of cutpoints
+#' @param truncate.low : flag to truncate below first cutpoint (i.e., cutpt\[1\]<-0)
+#' @param truncate.high : flag to truncate above last cutpoint (i.e., cutpt\[last\]<-Inf)
+#' @param returnSampleSizes : flag to return sample sizes as well as size compositions (default=FALSE)
+#' @param verbose : flag (T/F) to print diagnostic information
 #'
-#' @return If returnSampleSizes is FALSE, a dataframe with same columns as mdfrZCs, except that the \code{valCol}
+#' @return If \code{returnSampleSizes} is FALSE, a dataframe with same columns as mdfrZCs, except that the \code{valCol}
 #' column is renamed to that in \code{scaleCol}.
 #'
-#' If returnSampleSizes is TRUE, then the return value is a list with named elements
+#' If \code{returnSampleSizes} is TRUE, then the return value is a list with named elements
 #' * tblSS -a dataframe with sample sizes
 #' * tblZCs - the scaled, rebinned and expanded size compositions
 #'
-#' @details Uses \code{sqldf::sqldf}, \code{reshape2::dcast}, \code{wtsUtilities::Sum}, and \code{wtsUtilities::applyCutPts}.
+#' @details Uses [sqldf::sqldf()], [reshape2::dcast()], [wtsUtilities::Sum()], and [wtsUtilities::applyCutPts()].
 #' Input column names should given "as is" and **NOT** be backquoted.
+#'
+#' @importFrom reshape2 dcast
+#' @importFrom sqldf sqldf
+#' @importFrom wtsUtilities applyCutPts Sum
 #'
 #' @export
 #'

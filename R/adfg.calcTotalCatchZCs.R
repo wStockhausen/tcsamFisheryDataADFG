@@ -3,11 +3,11 @@
 #'
 #' @description Function to calculate expanded annual total catch size compositions by crab fishery, area, year, sex and shell condition.
 #'
-#' @param tblTotAB - dataframe with total catch abundance and biomass by fishery, area, year, sex, and shell condition
-#' @param tblTotZCsRaw -  data.frame from call to function [adfgRead_MPD()]
-#' @param cutpts - cutpts for bins
-#' @param truncate.low - flag to exclude crab with sizes less than minimum cutpt (default=TRUE)
-#' @param truncate.high - flag to exclude crab with sizes greater than maximum cutpt (default=FALSE)
+#' @param tblTotAB : dataframe with total catch abundance and biomass by fishery, area, year, sex, and shell condition
+#' @param tblTotZCsRaw :  data.frame from call to function [adfgRead_MPD()]
+#' @param cutpts : cutpts for bins
+#' @param truncate.low : flag to exclude crab with sizes less than minimum cutpt (default=TRUE)
+#' @param truncate.high : flag to exclude crab with sizes greater than maximum cutpt (default=FALSE)
 #'
 #' @return a dataframe with columns
 #' * fishery
@@ -18,7 +18,7 @@
 #' * size
 #' * abundance (in thousands of crab)
 #'
-#' @details Uses \code{sqldf::sqldf} and \code{reshape2::dcast}. tblTotZCsRaw should have columns
+#' @details Uses [sqldf::sqldf()] and [reshape2::dcast()]. tblTotZCsRaw should have columns
 #' "fishery", "area", "year", "sex", "maturity", "shell condition", "size" and "count".
 #'
 #' @importFrom reshape2 dcast

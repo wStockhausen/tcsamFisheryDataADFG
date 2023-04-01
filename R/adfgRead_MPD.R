@@ -144,12 +144,12 @@ adfgRead_MPD<-function(csv="crab_dump.csv",
   dfrp %<>% dplyr::select(!tidyselect::any_of(c("latitude","longitude")));
   dfrp$count <- 1;#--add 'count': each row represents an observation on 1 crab
   #--determine crab year corresponding to sample date
-  if (date_format=="yyyy-mm-dd"){
+  if (stringr::str_sub(date_format,1,4)=="yyyy"){
     dfrp$year<-adfgConvert_DateYYYYMMDDtoFisheryYear(dfrp$sampdate);
-  } else if (date_format=="mm-dd-yyyy"){
+  } else if (stringr::str_sub(date_format,-4,-1)=="yyyy"){
     dfrp$year<-adfgConvert_DateMMDDYYYYtoFisheryYear(dfrp$sampdate);
   } else {
-    stop("#--ERROR!\n\tUnrecognized date format in adfgRead_DSD(...).\n")
+    stop("#--ERROR!\n\tUnrecognized date format in adfgRead_MPD(...).\n")
   }
   #names(dfrp)
   # [1] "trip"         "adfg"         "sampdate"     "spn"          "statarea"     "mi_lon"       "mi_lat"       "spcode"

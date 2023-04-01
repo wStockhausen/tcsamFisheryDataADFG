@@ -7,7 +7,7 @@
 adfgRead_SPD(
   csv = "TANNER-1990-2020_potsum.csv",
   date_format = "mm-dd-yyyy",
-  col_types = "ccccccddddddddcc"
+  returnDropped = FALSE
 )
 }
 \arguments{
@@ -19,14 +19,14 @@ adfgRead_SPD(
 \item string ("yyyy-mm-dd" or "mm-dd-yyyy") indicating date format
 }}
 
-\item{col_types}{\itemize{
-\item passed to readr::read_csv, specifies column types (dedfault="ccccccddddddddcc")
+\item{returnDropped}{\itemize{
+\item flag (T/F) to return \emph{dropped} records, not selected records
 }}
 }
 \value{
 a tibble with columns "fishery","area","EWbySA","EWbyLon","year","fishery_code",
-"code_year","trip","adfg","sampdate","spn","statarea","mi_lon","mi_lat",
-"spcode","sex","shell","size","legal","count"
+"code_year","trip","adfg","sampdate","spn","statarea","longitude","latitude",
+"female", "sublegal", "legal_ret", "legal_nr", "legal_ur", "tot_legal".
 }
 \description{
 Function to extract summary pot data (SPD) as a tibble from a csv file.
@@ -39,5 +39,5 @@ The 'year' values are 'crab year' based on the sample date. The 'code_year' is t
 ADFG fishery year based on the fishery code. Prior to rationalization, there may be differences
 in these two values.
 
-'count' is the number of crab associated with the rest of the row categories.
+value columns represent the number of crab in the category.
 }

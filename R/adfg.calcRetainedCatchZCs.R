@@ -15,7 +15,7 @@
 #' * size
 #' * abundance (in thousands of crab)
 #'
-#' @details Uses \code{readr::read_csv} and \code{stringr::str_sub}.
+#' @details Uses [readr::read_csv()] and [stringr::str_sub()].
 #'
 #' @export
 #'

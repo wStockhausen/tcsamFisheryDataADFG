@@ -1,8 +1,8 @@
 Package: tcsamFisheryDataADFG
 Type: Package
 Title: Functions to process ADFG crab fishery data
-Version: 2022.08.09
-Date: 2022-08-09
+Version: 2023.03.031
+Date: 2023-03-31
 Author: William Stockhausen
 Maintainer: William Stockhausen <william.stockhausen@noaa.gov>
 Description: Provides a set of functions to convert ADFG crab fishery data to TCSAM02-compatible formats.
@@ -22,4 +22,4 @@ Imports:
     wtsUtilities (>= 2020.07.01)
 Suggests:
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.1.2
+RoxygenNote: 7.2.3
