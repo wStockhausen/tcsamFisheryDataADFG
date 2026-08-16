@@ -22,4 +22,15 @@ Function to convert ADFG sex codes to character labels.
 \item sex codes: 1,2,3,0
 \item labels: "male","female","hermaphrodite","undetermined"
 }
+
+If x is a character vector, values are converted to numeric and elements with non-NA values
+are converted using the above substitutions. The elements that generated NA values
+(i.e. non-numeric text) are not changed. Elements that can be converted to numeric but
+do not match one of the sex codes (e.g., -999) are converted to "undetermined".
+}
+\examples{
+# example code
+x = c("1","female","-999",NA);
+adfgConvert_SexCodes(x);
+
 }

@@ -2,9 +2,9 @@
 % Please edit documentation in R/adfgRead_TotalCatchABs.R
 \name{adfgRead_TotalCatchABs}
 \alias{adfgRead_TotalCatchABs}
-\title{Get annual total catch abundance and biomass by crab fishery from a csv file}
+\title{Get annual total catch abundance and biomass by crab fishery from a 2026+ csv file}
 \usage{
-adfgRead_TotalCatchABs(csv, skip = 5)
+adfgRead_TotalCatchABs(csv, skip = 0)
 }
 \arguments{
 \item{csv}{\itemize{
@@ -12,7 +12,7 @@ adfgRead_TotalCatchABs(csv, skip = 5)
 }}
 
 \item{skip}{\itemize{
-\item number of lines to skip (default=5)
+\item number of lines to skip (default=0)
 }}
 }
 \value{
@@ -29,13 +29,15 @@ a tibble with columns \cr
 }
 }
 \description{
-Function to get annual total catch abundance and biomass by crab fishery from a csv file.
+Function to get annual total catch abundance and biomass by crab fishery from a 2026+ csv file.
 }
 \details{
 Uses \code{readr::read_csv}, \code{stringr::str_sub}, and \code{sqldf::sqldf}.
 }
 \note{
-The input csv should be the exported "item4a" worksheet from the Excel spreadsheet provided annually by ADFG
-for Tanner crab. These are the "official" estimates of total catch abundance and biomass
+The input csv should be in the "total_catch_sex_shell.csv" format provided annually by ADFG
+for Tanner crab since 2026. These are the "official" estimates of total catch abundance and biomass
 of Tanner crab in the crab fisheries.
+
+\code{shell_condition} may include "undetermined" values, as well as "new shell" and "old shell" values.
 }

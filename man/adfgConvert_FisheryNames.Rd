@@ -19,7 +19,7 @@ Function to convert ADFG fishery names to canonical assessment names.
 }
 \details{
 \itemize{
-\item original names: "Tanner crab","Tanner E","Tanner W","Tanner","snow crab","snow","BBRKC","RKC"
-\item final names:    "TCF",        "TCF",     "TCF",     "TCF",   "SCF",      "SCF", "RKF",  "RKF"
+\item original names: "WBT","EBT","Tanner crab","Tanner E","Tanner W","Tanner","Snow crab","snow crab","Snow","snow","BSSC","BBRKC","RKC"
+\item final names:    "TCF","TCF","TCF",        "TCF",     "TCF",     "TCF",   "SCF",      "SCF",      "SCF", "SCF" ,"SCF", "RKF",  "RKF"
 }
 }

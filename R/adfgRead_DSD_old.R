@@ -1,7 +1,7 @@
 #'
-#' @title Extract dockside data (DSD) as a tibble from a csv file
+#' @title Extract dockside data (DSD) as a tibble from a pre-2026 csv file
 #'
-#' @description Function to extract dockside data as a tibble from a csv file.
+#' @description Function to extract dockside data as a tibble from a pre-2026 csv file.
 #'
 #' @param csv - csv filename with dockside data
 #' @param date_format - string ("yyyy-mm-dd" or "mm-dd-yyyy") indicating date format
@@ -21,15 +21,16 @@
 #' @importFrom readr read_csv
 #' @importFrom stringr str_sub
 #'
-#' @export
 #'
-adfgRead_DSD<-function(csv="retained_catch.csv",
+adfgRead_DSD<-function(csv="TANNER-1990-2018_dockside.csv",
                        date_format="yyyy-mm-dd"){
   #--read dockside data file
   ##--pre-2026 columns: fishery  adfg sampdate   spcode  size legal shell numcrab
   ##--2026+ columns: crab_year fishery target_stock  size shell total
   dfr <- readr::read_csv(csv);
-  expCols<-c("crab_year", "fishery", "target_stock",  "size", "shell", "total");
+  #column names should be:
+  expCols<-c("fishery","adfg","sampdate","spcode",
+             "size","legal","shell","numcrab");
   #check column names
   if (any(names(dfr)!=expCols)){
     idx<-names(dfr)!=expCols;
@@ -61,13 +62,8 @@ adfgRead_DSD<-function(csv="retained_catch.csv",
   dfr$maturity <- "undetermined";
 
   #convert shell condition codes to labels
-  if (file_type=="pre-2026"){
-    dfr$shell <- adfgConvert_ShellConditionCodes(dfr$shell);
-  } else {
-    #--do nothing
-  }
+  dfr$shell <- adfgConvert_ShellConditionCodes(dfr$shell);
 
-  if (FALSE){ #--pre-2026 code
       #--parse 4-character fishery codes
       dfr.pf<-adfgConvert_FisheryCodes(dfr$fishery);
 
@@ -109,9 +105,6 @@ adfgRead_DSD<-function(csv="retained_catch.csv",
     #--final columns:
     #"fishery"      "area"         "year"         "fishery_code" "code_year"    "adfg"         "sampdate"     "sex"          "maturity"
     # "shell"        "size"         "legal"        "count"
-  } else {
-     #--????what to do for 2026+ files
-  }
 
   #rename fisheries to canonical forms
   dfrp1$fishery <- adfgConvert_FisheryNames(dfrp1$fishery);
